@@ -1,64 +1,79 @@
 .search-bar {
-    display: flex;
-    align-items: center;
-    margin: 20px;
-    padding-left: 10px;
-    
-  }
+  display: flex;
+  align-items: center;
+  margin: 20px;
+  padding-left: 5px;
   
-  .search-bar input[type="text"] {
-    padding: 15px;
-    padding-right: 70%;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-right: 16px;
-  
-  }
-  
-  .search-bar button {
-    padding: 15px 40px;
-    background-color: rgb(77, 145, 77);
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    cursor: pointer;
-    color: black;
-    font-size: 15px;
-  
-  }
-  .search-bar button:hover{
-    background-color:#ff9933;
-    color:#f2f2f2;
+}
+#dropdownMenuLink{
+  padding: 4px 90px;
+  background-color: white;
+  color: grey;
+  border: 1px solid #ccc;
+  margin-left: 20px;
+}
+
+.search-bar input[type="text"] {
+  padding: 15px;
+  padding-right: 12%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-right: 16px;
+  margin-left: 20px;
+}
+
+.search-bar button {
+  padding: 15px 120px;
+  background-color: rgb(77, 145, 77);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  color: black;
+  font-size: 15px;
+  margin-left: 20px;
+
+}
+.search-bar button:hover{
+  background-color:#ff9933;
+  color:#f2f2f2;
 }
 @media(max-width:600px){
-    .search-bar button {
-        padding: 15px 10px;
-        background-color: rgb(77, 145, 77);
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        cursor: pointer;
-        color: black;
-        font-size: 15px;
-        
+.search-bar {
+  display: flex;
+  align-items: center;
+  max-width: 20px;
+  margin: 0px ;
+  padding-right: 10px;
+  
+}
+  /* .search-bar button {
+      padding: 15px 10px;
+      background-color: rgb(77, 145, 77);
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+      color: black;
+      font-size: 15px;
       
-      }
-      .search-bar input[type="text"] {
-        padding: 15px;
-        padding-right: 50%;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        margin-right: 16px;
-      
-      }
+    
+    }
+    .search-bar input[type="text"] {
+      padding: 15px;
+      padding-right: 50%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-right: 16px;
+    
+    } */
 }
 @media(max-width:1180px)
-  {
-    .search-bar input[type="text"] {
-        padding: 15px;
-        padding-right: 30%;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        margin-right: 16px;
-      
-      }
-  }
-
+{
+  .search-bar input[type="text"] {
+      padding: 15px;
+      padding-right: 30%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-right: 16px;
+    
+    }
+}

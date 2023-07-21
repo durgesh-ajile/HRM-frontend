@@ -14,7 +14,7 @@ const ClientsCard = () => {
     // const dispatch = useDispatch()
 
     return (
-        <Card sx={{ width: "400px", backgroundColor: '#ffffff', display: 'flex', justifyContent: 'center', textAlign: 'center', marginBottom: '10px' }}>
+        <Card sx={{ width: "300px", backgroundColor: '#ffffff', display: 'flex', justifyContent: 'center', textAlign: 'center', marginBottom: '10px' }}>
             <CardContent sx={{ width: '100%' }}>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
                     <MoreVertIcon sx={{cursor:'pointer',fontSize:'30px',color:'gray'}} />
