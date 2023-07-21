@@ -4,4 +4,4 @@
      3. don't use any tag name as a css selector . it will effect all tha same tag in our project
      4. always try to write optimized code, maintanable code, reusable code.
 
-# after taking clone create branch first 
+# after taking clone create branch first then start working with this project
