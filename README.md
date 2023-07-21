@@ -1,8 +1,7 @@
 # after taking clone create branch first 
 
-<!-- Addon Links -->
-<!--     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
- -->
-
- <!-- install material UI -->
-
+# RULES THAT WE SHOULD FOLLOW WHILE WORKING IN THIS PEOJECT.
+# 1. always check the console for any errors
+# 2. code should be formatted ( alt + shift + f )
+# 3. don't use any tag name as a css selector . it will effect all tha same tag in our project
+# 4. always try to write optimized code, maintanable code, reusable code.
