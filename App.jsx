@@ -2,23 +2,27 @@
 // import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Registration from './src/Component/Registration'
-import ClientsCard from './src/Component/common/ClientsCard'
-import New from './src/Component/New'
-import SearchBar from './src/Component/SearchBar'
-import Cards from './src/Component/common/Cards'
+// import Cards from './src/Component/common/Cards'
+import Calender from './src/Pages/Calender'
+import AdminContractorTab from './src/Pages/AdminContractorTab'
+import SignInPage from './src/Pages/SignInPage'
+import { useState } from 'react'
 
 
 function App() {
-
+  // eslint-disable-next-line no-unused-vars
+  const [routesData, setRoutesData] = useState([
+    { path: '/', component: <AdminContractorTab /> },
+    { path: '/signin', component: <SignInPage /> },
+    { path: '/registration', component: <Registration /> },
+    { path: '/calender', component: <Calender /> },
+  ])
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Registration />} />
-        <Route path="/a" element={<><New/><SearchBar/><ClientsCard /><ClientsCard /><ClientsCard /><ClientsCard /></>} />
-
+        {routesData?.map((route) => { return <Route path={route?.path} element={route?.component} key={route?.path} /> })}
       </Routes>
-      
-      <Cards />
+      {/* <Cards /> */}
     </BrowserRouter>
   )
 }
