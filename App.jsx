@@ -2,11 +2,12 @@
 // import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Registration from './src/Component/Registration'
-// import Cards from './src/Component/common/Cards'
 import Calender from './src/Pages/Calender'
-import AdminContractorTab from './src/Pages/AdminContractorTab'
+import AdminContractorTab from './src/Pages/AdminContractorTab/AdminContractorTab'
 import SignInPage from './src/Pages/SignInPage'
 import { useState } from 'react'
+import Profile from './src/Component/profile/Profile'
+// import Cards from './src/Component/profile/Cards'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     { path: '/signin', component: <SignInPage /> },
     { path: '/registration', component: <Registration /> },
     { path: '/calender', component: <Calender /> },
+    { path: '/profile', component: <Profile /> },
   ])
   return (
     <BrowserRouter>
