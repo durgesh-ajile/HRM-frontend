@@ -1,27 +1,27 @@
-import './SearchBar.css';
+import React from 'react';
+import './SearchBar.css'; 
 
 
 function SearchBar() {
-
-
-  return (
-    <div className="search-bar">
-      <input type="text" placeholder="Client ID" />
-      <input type="text" placeholder="Client Name" />
-      <div className="dropdown show">
-        <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Company<br />Select Company
-        </a>
-
-        <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a className="dropdown-item" href="/">Action</a>
-          <a className="dropdown-item" href="#">Another action</a>
-          <a className="dropdown-item" href="#">Something else here</a>
-        </div>
+  
+  
+    return (
+      <div className="client-search-form">
+      <div className="form-row">
+        <input type="text" placeholder="Client ID" />
+        <input type="text" placeholder="Client Name" />
+        <select>
+          <option value="">Select Company</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          {/* Add more options here */}
+        </select>
+        <button type="submit">Search</button>
       </div>
-      <button type="submit">Search</button>
     </div>
-  );
-}
+     );
+    }
+     
 
-export default SearchBar;
+  
+  export default SearchBar;
