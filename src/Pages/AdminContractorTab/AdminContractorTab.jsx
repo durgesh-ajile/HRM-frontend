@@ -9,7 +9,7 @@ const AdminContractorTab = () => {
         <Box sx={{ backgroundColor: '#00000006' }}>
             <New />
             <SearchBar />
-            <Box className={'AdminContractorTab_container'} sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <Box className={'AdminContractorTab_container'}>
                 <Box className={'AdminContractorTab_container_fluid'} >
                     {/* use map function here */}
                     <Box >

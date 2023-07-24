@@ -1,79 +1,59 @@
-.search-bar {
+.client-search-form {
+  display: flex;
+  justify-content: center;
+
+}
+
+.form-row {
   display: flex;
   align-items: center;
-  margin: 20px;
-  padding-left: 5px;
-  
+  margin-bottom: 10px;
+  width: 98%;
 }
-#dropdownMenuLink{
-  padding: 4px 90px;
-  background-color: white;
+
+.form-row input,
+.form-row select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 15px;
+  margin-top: 10px;
+ 
+}
+.form-row select {
+  flex: 1;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 15px;
+  margin-top: 10px;
   color: grey;
-  border: 1px solid #ccc;
-  margin-left: 20px;
+ 
 }
 
-.search-bar input[type="text"] {
-  padding: 15px;
-  padding-right: 12%;
+.form-row button {
+  padding: 10px 95px;
+  background-color: #f2f2f2;
   border: 1px solid #ccc;
-  border-radius: 10px;
-  margin-right: 16px;
-  margin-left: 20px;
-}
-
-.search-bar button {
-  padding: 15px 120px;
-  background-color: rgb(77, 145, 77);
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 4px;
   cursor: pointer;
-  color: black;
-  font-size: 15px;
-  margin-left: 20px;
+  margin-top: 12px;
+  color: white;
+  font-size: 18px;
+  background-color: rgb(63, 167, 63);
+}
 
-}
-.search-bar button:hover{
-  background-color:#ff9933;
-  color:#f2f2f2;
-}
-@media(max-width:600px){
-.search-bar {
-  display: flex;
-  align-items: center;
-  max-width: 20px;
-  margin: 0px ;
-  padding-right: 10px;
-  
-}
-  /* .search-bar button {
-      padding: 15px 10px;
-      background-color: rgb(77, 145, 77);
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      cursor: pointer;
-      color: black;
-      font-size: 15px;
-      
-    
-    }
-    .search-bar input[type="text"] {
-      padding: 15px;
-      padding-right: 50%;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      margin-right: 16px;
-    
-    } */
-}
-@media(max-width:1180px)
-{
-  .search-bar input[type="text"] {
-      padding: 15px;
-      padding-right: 30%;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      margin-right: 16px;
-    
-    }
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .form-row {
+    flex-wrap: wrap;
+  }
+
+  .form-row input,
+  .form-row select,
+  .form-row button {
+    margin-right: 5px;
+    margin-bottom: 10px;
+  }
 }
