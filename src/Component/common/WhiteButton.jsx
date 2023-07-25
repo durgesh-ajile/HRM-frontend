@@ -2,10 +2,11 @@
 
 // import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-const WhiteButton = ({ text }) => {
+// eslint-disable-next-line react/prop-types
+const WhiteButton = ({ text, onClick }) => {
     return (
         // <Stack spacing={2} direction="row">
-        <Button sx={{ color: 'gray', borderColor: 'gray', fontWeight: '700', fontSize: '15px' }} variant="outlined">{text ? text : "text"}</Button>
+        <Button onClick={onClick} sx={{ color: 'gray', borderColor: 'gray', fontWeight: '700', fontSize: '15px' }} variant="outlined">{text ? text : "text"}</Button>
         // </Stack>
     )
 }
