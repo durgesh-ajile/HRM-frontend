@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './Sign.module.css';
 import { BsPersonCircle } from 'react-icons/bs';
 import { AiFillLock } from 'react-icons/ai'
@@ -6,14 +6,25 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
+import { asyncThunkLogin } from '../../redux/createAsyncThunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 const SingIn = () => {
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    // const { LoginData } = useSelector((store) => store.admin)
+
+
     const handleLogin = (event) => {
         event.preventDefault();
-        console.log('Login request sent:', { name, password });
+        dispatch(asyncThunkLogin({ "email": email, "password": password }))
+        const {usertoken} = JSON.parse(localStorage.getItem("token"))
+        usertoken && navigate('/')
+
     };
     return (
         <div className={styles.container}>
@@ -22,14 +33,14 @@ const SingIn = () => {
                 <p style={{ textAlign: 'center', columnGap: '-10px' }} className='para'>Enter your credentials below</p>
 
                 <form onSubmit={handleLogin}>
-                    <label className="py-2">Username</label>
+                    <label className="py-2">Email</label>
 
                     <div className="input-group input-group-lg mb-3 flex-nowrap">
                         <span className="input-group-text" id="basic-addon1"><BsPersonCircle />
                         </span>
-                        <input type="username" className="form-control py-2" placeholder="Enter your name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                        <input type="email" className="form-control py-2" placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
 
                         />
@@ -125,7 +136,7 @@ const SingIn = () => {
                     {/* before::after */}
                     {/* <div className={styles.secand}>Don't have an account?</div>  */}
                     {/* button2 */}
-                     {/* <div className={styles.footer2}>
+                    {/* <div className={styles.footer2}>
                     <button className='btn btn-white'>Sign  up</button>
                     </div> */}
 

@@ -1,4 +1,3 @@
-import React from "react";
 import "./Cards.css";
 // import { HiOutlinePencilSquare } from "react-icons/hi2";
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,7 +18,7 @@ const Cards = () => {
                 <span>
                   <b>Passport No.</b>
                 </span>{" "}
-                <span className="valuep" style={{ textAlign: "right", marginLeft: "118px" ,textAlign:"right"}}>
+                <span className="valuep" style={{ textAlign: "right", marginLeft: "118px" }}>
                   {" "}
                   9876543210
                 </span>

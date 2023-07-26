@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './New.css';
 import { RxCross2 } from "react-icons/rx";
-import { BsFillGrid3X3GapFill } from "react-icons/bs";
-import { HiBars3 } from "react-icons/hi2";
+import { useDispatch } from 'react-redux';
+import { asyncThunkAddContractor } from '../redux/createAsyncThunk';
+// import { BsFillGrid3X3GapFill } from "react-icons/bs";
+// import { HiBars3 } from "react-icons/hi2";
 
 function New() {
-  const [clients, setClients] = useState([]);
+  // const [clients, setClients] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [clientDetails, setClientDetails] = useState({
     name: '',
     email: '',
     phone: '',
   });
+  const dispatch = useDispatch();
+
 
   const togglePopup = () => {
     setShowPopup(!showPopup);
@@ -28,42 +32,49 @@ function New() {
     }));
   };
 
-  const addClient = () => {
-    setClients((prevClients) => [...prevClients, clientDetails]);
-    setClientDetails({
-      name: '',
-      email: '',
-      phone: '',
-    });
-    togglePopup();
+  const handleAddContractor = () => {
+    const payload = {
+      "first_name": clientDetails.name,
+      "last_name": clientDetails.email,
+      "email": clientDetails.phone
+    }
+    dispatch(asyncThunkAddContractor(payload))
+
+    // setClients((prevClients) => [...prevClients, clientDetails]);
+    // setClientDetails({
+    //   name: '',
+    //   email: '',
+    //   phone: '',
+    // });
+    closePopup();
   };
 
   return (
     <div className="App">
       <nav className="navbar">
-        <h1 className="navbar-heading">Client<br/>Dashboard /<span> Clients</span>
-          </h1>
-          <div className="icon">
-          <BsFillGrid3X3GapFill className="icon1" />
-      <HiBars3 className="icon2" />
-      </div>
-       
+        <h1 className="navbar-heading">Contractor<br />Dashboard /<span> Contractor</span>
+        </h1>
+        <div className="icon">
+          {/* <BsFillGrid3X3GapFill className="icon1" />
+          <HiBars3 className="icon2" /> */}
+        </div>
+
         <button className="add-client-btn" onClick={togglePopup}>
-          +Add Client
+          +Add Contractor
         </button>
-      
+
       </nav>
 
       {showPopup && (
         <div className="popup">
           <div className="popup-inner">
-            <h2>Add Client</h2>
+            <h2>Add Contractor</h2>
             <button className="cross" onClick={closePopup}>
               {" "}
               <RxCross2 />
             </button>
             <form>
-              <label htmlFor="name">Name:</label>
+              <label htmlFor="name">First Name:</label>
               <input
                 type="text"
                 id="name"
@@ -72,25 +83,25 @@ function New() {
                 onChange={handleInputChange}
               />
 
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">Last Name:</label>
               <input
-                type="email"
+                type="text"
                 id="email"
                 name="email"
                 value={clientDetails.email}
                 onChange={handleInputChange}
               />
 
-              <label htmlFor="phone">Phone:</label>
+              <label htmlFor="phone">Email:</label>
               <input
-                type="tel"
+                type="email"
                 id="phone"
                 name="phone"
                 value={clientDetails.phone}
                 onChange={handleInputChange}
               />
 
-              <button type="button" onClick={addClient}>
+              <button type="button" onClick={handleAddContractor}>
                 Add
               </button>
             </form>
