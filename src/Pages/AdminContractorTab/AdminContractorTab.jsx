@@ -16,21 +16,22 @@ const AdminContractorTab = () => {
     const [ContractorData, setContractorData] = useState([])
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { ContractorData: { totalPages, totalContractors, page: pageIndicator, data } } = useSelector(stro => stro.admin)
-    console.log('ContractorData', totalPages, totalContractors, pageIndicator, data)
+    const { ContractorData: { totalPages, totalContractors, page: pageIndicator, data } } = useSelector(store => store.admin)
+    // console.log('ContractorData', totalPages, totalContractors, pageIndicator, data)
 
     const handlePrevPagination = () => {
-        setPage((prev => prev - 1))
-        dispatch(asyncThunkGetContractor(page))
+        if (page >= 2) {
+            setPage((prev => prev - 1))
+        } else {
+            dispatch(showToast({ type: "warning", message: "This Is First Page Please Click On Next Button" }))
+        }
         console.log(page)
     }
     const handleNextPagination = () => {
         if (pageIndicator < totalPages) {
             setPage((prev => prev + 1))
-            console.log(page)
-            dispatch(asyncThunkGetContractor(page))
         } else {
-            dispatch(showToast({ type: "error", message: "Page End" }))
+            dispatch(showToast({ type: "warning", message: "This Is Last Page Please Click On Prev Button" }))
         }
     }
 
@@ -39,6 +40,10 @@ const AdminContractorTab = () => {
         !usertoken && navigate('/signin')
         setContractorData(data)
     }, [data, navigate])
+
+    useEffect(() => {
+        dispatch(asyncThunkGetContractor(page))
+    }, [ page])
 
     return (
         <Box sx={{ backgroundColor: '#00000006' }}>
@@ -50,7 +55,7 @@ const AdminContractorTab = () => {
                     {
                         ContractorData?.map((value, i) => {
                             return <Box key={i}>
-                                <ClientsCard value={value}/>
+                                <ClientsCard value={value} />
                             </Box>
                         })
                     }
