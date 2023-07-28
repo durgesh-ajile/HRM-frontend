@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './New.css';
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch } from 'react-redux';
-import { asyncThunkAddContractor } from '../redux/createAsyncThunk';
+import { asyncThunkAddContractor, asyncThunkGetContractor } from '../redux/createAsyncThunk';
 // import { BsFillGrid3X3GapFill } from "react-icons/bs";
 // import { HiBars3 } from "react-icons/hi2";
 
@@ -39,7 +39,7 @@ function New() {
       "email": clientDetails.phone
     }
     dispatch(asyncThunkAddContractor(payload))
-
+    dispatch(asyncThunkGetContractor(1));
     // setClients((prevClients) => [...prevClients, clientDetails]);
     // setClientDetails({
     //   name: '',

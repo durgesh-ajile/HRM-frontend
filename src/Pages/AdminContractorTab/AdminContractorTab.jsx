@@ -17,7 +17,6 @@ const AdminContractorTab = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const { ContractorData: { totalPages, totalContractors, page: pageIndicator, data } } = useSelector(store => store.admin)
-    // console.log('ContractorData', totalPages, totalContractors, pageIndicator, data)
 
     const handlePrevPagination = () => {
         if (page >= 2) {
@@ -25,7 +24,6 @@ const AdminContractorTab = () => {
         } else {
             dispatch(showToast({ type: "warning", message: "This Is First Page Please Click On Next Button" }))
         }
-        console.log(page)
     }
     const handleNextPagination = () => {
         if (pageIndicator < totalPages) {
