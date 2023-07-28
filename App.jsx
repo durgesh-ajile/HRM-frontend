@@ -20,7 +20,7 @@ function App() {
     { path: '/signin', component: <SignInPage /> },
     { path: '/registration', component: <Registration /> },
     { path: '/calender', component: <Calender /> },
-    { path: '/profile', component: <Profile /> },
+    { path: '/profile/:contractorId', component: <Profile /> },
   ])
 
   const dispatch = useDispatch()
@@ -28,7 +28,6 @@ function App() {
 
   return (
     <BrowserRouter>
-
       <Snackbar open={errorShow} autoHideDuration={1500} onClose={() => dispatch(hideToast())}>
         <Alert onClose={() => dispatch(hideToast())} severity={errorType ? errorType : 'success'} sx={{ width: '100%', textTransform: "uppercase" }}>
           {message}

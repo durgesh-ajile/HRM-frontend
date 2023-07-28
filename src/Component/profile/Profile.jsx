@@ -1,34 +1,30 @@
-import * as React from 'react';
 import "./Profile.css"
-import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
-import IconButton from '@mui/joy/IconButton';
 import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import Chip from '@mui/joy/Chip';
-import Divider from '@mui/joy/Divider';
-import Input from '@mui/joy/Input';
+// import Divider from '@mui/joy/Divider';
 import List from '@mui/joy/List';
-import ListSubheader from '@mui/joy/ListSubheader';
 import ListItem from '@mui/joy/ListItem';
-import ListItemDecorator from '@mui/joy/ListItemDecorator';
-import ListItemButton from '@mui/joy/ListItemButton';
-import Typography from '@mui/joy/Typography';
-import Sheet from '@mui/joy/Sheet';
-import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import SendIcon from '@mui/icons-material/Send';
+// import Typography from '@mui/joy/Typography';
 import { Avatar, CardHeader } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import MuiGrid from '@mui/material/Grid';
 import { Grid } from '@mui/joy';
+import { useParams } from 'react-router-dom';
 
 import EditIcon from '@mui/icons-material/Edit';
 import Cardss from "./Cards"
+import { useEffect } from "react";
+import { asyncThunkGetDitailsOfContractor } from "../../redux/createAsyncThunk";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export default function Profile() {
-    const [color, setColor] = React.useState('neutral');
+
+    const { contractorId } = useParams();
+    const dispatch = useDispatch()
+    const { ContractorDataById } = useSelector(store => store.admin)
+    const{first_name, last_name, email} = ContractorDataById
+    useEffect(() => { const payload = { contractorId }; dispatch(asyncThunkGetDitailsOfContractor(payload)) }, [contractorId, dispatch])
+
+    // const [color, setColor] = React.useState('neutral');
     return (
         <>
             <div className='section' style={{ width: "100%", height: "100%" }}>
@@ -72,7 +68,7 @@ export default function Profile() {
                             </Avatar>
                             <Grid item style={{ marginTop: "-22px", marginLeft: "40px", }}>
 
-                                <h1 style={{ fontWeight: "666",marginBottom:'15px' }}>John Doe</h1>
+                                <h1 style={{ fontWeight: "666", marginBottom: '15px' }}>{first_name} {last_name}</h1>
                                 <p style={{ marginTop: "-25px", color: "gray", fontWeight: "666" }}>UI/UX Designer Team</p>
                                 <p style={{ marginTop: "10px", color: "gray", fontWeight: "666" }}>Web Designer</p>
                                 <h3 style={{ marginTop: "-7px", fontWeight: "666" }}>Employees ID : FT-0001</h3>
@@ -135,7 +131,7 @@ export default function Profile() {
                                     <ListItem>
                                         <ListItem style={{ color: "blue", fontWeight: "666" }}>
 
-                                            admin@dreamguystrech.com
+                                            {email}
                                         </ListItem>
                                     </ListItem>
                                     <ListItem>
@@ -176,8 +172,8 @@ export default function Profile() {
 
 
 
-                    <Divider style={{ backgroundColor: "gray" }} sx={{ my: 2 }} />
-                    <Box
+                    {/* <Divider style={{ backgroundColor: "gray" }} sx={{ my: 2 }} /> */}
+                    {/* <Box
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
@@ -199,11 +195,13 @@ export default function Profile() {
                             Assets
                         </Typography>
 
-                    </Box>
+                    </Box> */}
 
                 </Card>
                 <Cardss />
             </div>
+            <p>{JSON.stringify(ContractorDataById)}</p>
+
         </>
     );
 }

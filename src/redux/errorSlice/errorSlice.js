@@ -6,7 +6,7 @@ export const errorReducer = createSlice({
     errorType: "",
     message: "",
     errorShow: false,
-    loading:false
+    loading: false
   },
   reducers: {
     showToast: (state, action) => {
@@ -37,12 +37,12 @@ export const errorReducer = createSlice({
         }
       }
     },
-    hideToast: (state, action) => {
-        state.errorType = "";
-        state.errorShow = false;
-        state.message = "";
+    hideToast: (state) => {
+      state.errorType = "";
+      state.errorShow = false;
+      state.message = "";
     },
-    setLoading: (state, { payload })=>{
+    setLoading: (state, { payload }) => {
       state.loading = payload.value
     }
   },

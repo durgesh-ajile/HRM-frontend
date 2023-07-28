@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Sign.module.css';
 import { BsPersonCircle } from 'react-icons/bs';
 import { AiFillLock } from 'react-icons/ai'
@@ -16,16 +16,18 @@ const SingIn = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    // const { LoginData } = useSelector((store) => store.admin)
+    const { LoginData: { usertoken, expiry } } = useSelector((store) => store.admin)
 
 
     const handleLogin = (event) => {
         event.preventDefault();
         dispatch(asyncThunkLogin({ "email": email, "password": password }))
-        const {usertoken} = JSON.parse(localStorage.getItem("token"))
-        usertoken && navigate('/')
-
     };
+
+    useEffect(()=>{
+        usertoken && navigate('/')
+    },[navigate, usertoken])
+
     return (
         <div className={styles.container}>
             <div className={styles.innerBox}>

@@ -14,7 +14,6 @@ const Registration = () => {
   const navigate = useNavigate()
   const { SignUpData } = useSelector((store) => store.admin)
 
-  // console.log('adminSignUpData', adminSignUpData)
   const [checkboxes, setCheckboxes] = useState(
     {
       checkbox1: false,
