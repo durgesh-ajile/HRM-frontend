@@ -1,13 +1,11 @@
-// import React from 'react'
-// import './App.css'
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Registration from './src/Component/Registration'
-import Calender from './src/Pages/Calender'
 import AdminContractorTab from './src/Pages/AdminContractorTab/AdminContractorTab'
 import SignInPage from './src/Pages/SignInPage'
 import { useState } from 'react'
 import Profile from './src/Component/profile/Profile'
-// import Cards from './src/Component/profile/Cards'
+import ReactBigCalendar from './src/Pages/Calenders/Calender'
 
 
 function App() {
@@ -16,7 +14,7 @@ function App() {
     { path: '/', component: <AdminContractorTab /> },
     { path: '/signin', component: <SignInPage /> },
     { path: '/registration', component: <Registration /> },
-    { path: '/calender', component: <Calender /> },
+    { path: '/calender', component: <ReactBigCalendar /> },
     { path: '/profile', component: <Profile /> },
   ])
   return (

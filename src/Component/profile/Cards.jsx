@@ -19,7 +19,7 @@ const Cards = () => {
                 <span>
                   <b>Passport No.</b>
                 </span>{" "}
-                <span className="valuep" style={{ textAlign: "right", marginLeft: "118px" ,textAlign:"right"}}>
+                <span className="valuep" style={{ textAlign: "right", marginLeft: "118px" }}>
                   {" "}
                   9876543210
                 </span>
