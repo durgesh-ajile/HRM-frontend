@@ -70,7 +70,7 @@ export const asyncThunkGetContractor = createAsyncThunk("post/asyncThunkGetContr
 })
 
 // APPROVE_CONTRACTOR
-export const asyncThunkApproveContractor = createAsyncThunk("get/asyncThunkApproveContractor", async (payload, { dispatch }) => {
+export const asyncThunkApproveContractor = createAsyncThunk("patch/asyncThunkApproveContractor", async (payload, { dispatch }) => {
     const { usertoken } = JSON.parse(localStorage.getItem('token'))
     const headers = { 'Authorization': `Bearer ${usertoken}` };
     usertoken ?
@@ -81,6 +81,24 @@ export const asyncThunkApproveContractor = createAsyncThunk("get/asyncThunkAppro
                 dispatch(showToast({ type: "success", message: "Successfully approved contractor" }))
             }).catch((error) => {
                 dispatch(fetchApprovedContractorById({ ...error, isAproved: false }))
+                dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
+            })
+        :
+        dispatch(showToast({ type: "error", message: "token expired ! please signin again" }))
+})
+
+// DECLINE_CONTRACTOR
+export const asyncThunkDeclineContractor = createAsyncThunk("patch/asyncThunkDeclineContractor", async (payload, { dispatch }) => {
+    const { usertoken } = JSON.parse(localStorage.getItem('token'))
+    const headers = { 'Authorization': `Bearer ${usertoken}` };
+    usertoken ?
+        await axios.patch(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_DECLINE_CONTRACTOR}`, payload, { headers })
+            .then(res => {
+                if (res.status !== 201) return
+                // dispatch(fetchApprovedContractorById({ ...res?.data, isAproved: true }))
+                dispatch(showToast({ type: "success", message: "Successfully decline contractor" }))
+            }).catch((error) => {
+                // dispatch(fetchApprovedContractorById({ ...error, isAproved: false }))
                 dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
             })
         :
