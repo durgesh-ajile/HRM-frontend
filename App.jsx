@@ -19,7 +19,7 @@ function App() {
     { path: '/', component: <AdminContractorTab /> },
     { path: '/signin', component: <SignInPage /> },
     { path: '/registration', component: <Registration /> },
-    { path: '/calender', component: <Calender /> },
+    // { path: '/calender', component: <Calender /> },
     { path: '/profile/:contractorId', component: <Profile /> },
   ])
 

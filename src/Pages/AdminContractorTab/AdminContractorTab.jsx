@@ -17,6 +17,7 @@ const AdminContractorTab = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const { ContractorData: { totalPages, totalContractors, page: pageIndicator, data } } = useSelector(store => store.admin)
+    // const { ContractorData: { totalPages, totalContractors, page: pageIndicator, data } } = useSelector(store => store.admin)
 
     const handlePrevPagination = () => {
         if (page >= 2) {
@@ -34,14 +35,20 @@ const AdminContractorTab = () => {
     }
 
     useEffect(() => {
-        const { usertoken } = JSON.parse(localStorage.getItem("token"))
-        !usertoken && navigate('/signin')
+        let token = null
+        try {
+            token = JSON.parse(localStorage.getItem("token"))
+            token === null && dispatch(showToast({ type: "warning", message: "Token Has Expited ! Please SignIn Again" }))
+        } catch (error) {
+            dispatch(showToast({ type: "warning", message: "Token Has Expited ! Please SignIn Again" }))
+        }
+        !token?.usertoken && navigate('/signin')
         setContractorData(data)
-    }, [data, navigate])
+    }, [data, dispatch, navigate])
 
     useEffect(() => {
         dispatch(asyncThunkGetContractor(page))
-    }, [ page])
+    }, [dispatch, page])
 
     return (
         <Box sx={{ backgroundColor: '#00000006' }}>
