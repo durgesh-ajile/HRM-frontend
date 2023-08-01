@@ -4,6 +4,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import "./Calender.css"
+import AddEventPopup from "../../Component/Popups/AddEventPopup";
 moment.locale("en-GB");
 
 const events = [
@@ -181,9 +182,14 @@ const events = [
 
 export default function ReactBigCalendar() {
   const [eventsData, setEventsData] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
 
   const handleDateClick = (arg) => {
-    alert(arg.dateStr);
+    togglePopup()
   };
 
   const handleDateSet = (date) => {
@@ -194,6 +200,7 @@ export default function ReactBigCalendar() {
   return (
     <>
       <div className="calender-div">
+      {showPopup && ( <AddEventPopup setShowPopup={setShowPopup} showPopup={showPopup}/> )}
         <div className="Full-Calender">
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
