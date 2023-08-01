@@ -8,7 +8,6 @@ import Profile from './src/Component/profile/Profile'
 import { Alert, Snackbar } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideToast } from './src/redux/errorSlice/errorSlice'
-import ReactBigCalendar from './src/Pages/Calenders/Calender'
 
 
 function App() {
@@ -17,7 +16,6 @@ function App() {
     { path: '/', component: <AdminContractorTab /> },
     { path: '/signin', component: <SignInPage /> },
     { path: '/registration', component: <Registration /> },
-    { path: '/calender', component: <ReactBigCalendar /> },
     { path: '/profile/:contractorId', component: <Profile /> },
   ])
 
