@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 
 function SearchBar() {
-  
+
   const [inputValue, setInputValue] = useState('')
   const dispatch = useDispatch()
 
@@ -21,7 +21,7 @@ function SearchBar() {
     <div className="client-search-form">
       <div className="form-row">
         <input onChange={(e) => handleChangeSerch(e)} type="text" placeholder="Search Contractor" />
-        <button onClick={() => handleSubmit()} type="submit">Search</button>
+        <button onClick={() => handleSubmit()} disabled={inputValue ? false : true} style={{ cursor: !inputValue && 'no-drop' }} type="submit">Search</button>
       </div>
     </div>
   );
