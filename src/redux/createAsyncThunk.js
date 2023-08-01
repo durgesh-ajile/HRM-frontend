@@ -24,9 +24,10 @@ export const asyncThunkLogin = createAsyncThunk("post/asyncThunkLogin", async (p
             if (res.status !== 201) return
             dispatch(fetchLogin(res?.data?.Token))
             dispatch(showToast({ type: "success", message: "Login Successfully" }))
-        }).catch(() => {
+        }).catch((error) => {
+            console.error(error)
             dispatch(fetchLogin([]))
-            dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
+            dispatch(showToast({ type: "error", message: error?.response?.data?.message }))
         })
 })
 
@@ -40,9 +41,10 @@ export const asyncThunkAddContractor = createAsyncThunk("post/asyncThunkAddContr
                 if (res.status !== 201) return
                 // dispatch(fetchAddContractor([res?.data?.data]))
                 dispatch(showToast({ type: "success", message: "Contractor Added Successfully" }))
-            }).catch(() => {
+            }).catch((error) => {
+                console.error(error)
                 // dispatch(fetchAddContractor([]))
-                dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
+                dispatch(showToast({ type: "error", message: error?.response?.data?.error }))
             })
         :
         dispatch(showToast({ type: "error", message: "token expired ! please signin again" }))
@@ -133,10 +135,10 @@ export const asyncThunkSearchContractors = createAsyncThunk("get/asyncThunkSearc
                 console.log("res", res)
                 if (res.status !== 200) return
                 dispatch(fetchAddContractor(res?.data))
-                // dispatch(showToast({ type: "success", message: "Contractor Added Successfully" }))
-            }).catch(() => {
-                dispatch(fetchAddContractor([]))
-                dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
+                dispatch(showToast({ type: "success", message: "Contractor Searched Successfully" }))
+            }).catch((error) => {
+                console.error(error)
+                dispatch(showToast({ type: "error", message: error?.response?.data?.message  }))
             })
         :
         dispatch(showToast({ type: "error", message: "token expired ! please signin again" }))
