@@ -59,7 +59,7 @@ function New() {
         </div>
 
         <button className="add-client-btn" onClick={togglePopup}>
-          +Add Contractor
+          Add Contractor
         </button>
 
       </nav>

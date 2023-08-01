@@ -24,7 +24,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Snackbar open={errorShow} autoHideDuration={1500} onClose={() => dispatch(hideToast())}>
+      <Snackbar open={errorShow} autoHideDuration={3000} onClose={() => dispatch(hideToast())}>
         <Alert onClose={() => dispatch(hideToast())} severity={errorType ? errorType : 'success'} sx={{ width: '100%', textTransform: "uppercase" }}>
           {message}
         </Alert>
