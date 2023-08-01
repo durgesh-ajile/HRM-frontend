@@ -6,7 +6,7 @@ import AvatarComponent from './Avatar ';
 import { Box } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
-import { asyncThunkApproveContractor } from '../../redux/createAsyncThunk';
+import { asyncThunkApproveContractor, asyncThunkDeclineContractor } from '../../redux/createAsyncThunk';
 import { useDispatch } from 'react-redux';
 
 // eslint-disable-next-line react/prop-types
@@ -19,10 +19,8 @@ const ClientsCard = ({ value }) => {
     const dispatch = useDispatch()
 
     const handleViewProfile = (contractorId) => { navigate(`/profile/${contractorId}`) }
-    const handleApproveProfile = (contractorId) => {
-        const payload = { contractorId }
-        dispatch(asyncThunkApproveContractor(payload))
-    }
+    const handleApproveProfile = (contractorId) => { const payload = { contractorId }; dispatch(asyncThunkApproveContractor(payload)) }
+    const handleDeclineProfile = (contractorId) => { const payload = { contractorId }; dispatch(asyncThunkDeclineContractor(payload)) }
 
     return (
         <Card sx={{ width: "300px", backgroundColor: '#ffffff', display: 'flex', justifyContent: 'center', textAlign: 'center', marginBottom: '10px' }}>
@@ -47,8 +45,11 @@ const ClientsCard = ({ value }) => {
                         <WhiteButton onClick={() => handleApproveProfile(_id)} text={'Approve'} />
                     </Box>
                     <Box>
-                        <WhiteButton onClick={() => handleViewProfile(_id)} text={'View Profile'} />
+                        <WhiteButton onClick={() => handleDeclineProfile(_id)} text={'Decline'} />
                     </Box>
+                </Box>
+                <Box>
+                    <WhiteButton onClick={() => handleViewProfile(_id)} text={'View Profile'} />
                 </Box>
             </CardContent>
         </Card>

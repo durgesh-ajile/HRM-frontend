@@ -38,10 +38,10 @@ export const asyncThunkAddContractor = createAsyncThunk("post/asyncThunkAddContr
         await axios.post(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_ADD_CONTRACTOR}`, payload, { headers })
             .then(res => {
                 if (res.status !== 201) return
-                dispatch(fetchAddContractor([res?.data?.data]))
+                // dispatch(fetchAddContractor([res?.data?.data]))
                 dispatch(showToast({ type: "success", message: "Contractor Added Successfully" }))
             }).catch(() => {
-                dispatch(fetchAddContractor([]))
+                // dispatch(fetchAddContractor([]))
                 dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
             })
         :
@@ -56,6 +56,8 @@ export const asyncThunkGetContractor = createAsyncThunk("post/asyncThunkGetContr
         await axios(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_GET_CONTRACTOR + '?page=' + payload}`, { headers })
             .then(res => {
                 if (res.status !== 200) return
+                console.log("res", res)
+
                 dispatch(fetchAddContractor(res?.data))
                 // dispatch(showToast({ type: "success", message: "Contractor Added Successfully" }))
             }).catch((error) => {
@@ -68,7 +70,7 @@ export const asyncThunkGetContractor = createAsyncThunk("post/asyncThunkGetContr
 })
 
 // APPROVE_CONTRACTOR
-export const asyncThunkApproveContractor = createAsyncThunk("get/asyncThunkApproveContractor", async (payload, { dispatch }) => {
+export const asyncThunkApproveContractor = createAsyncThunk("patch/asyncThunkApproveContractor", async (payload, { dispatch }) => {
     const { usertoken } = JSON.parse(localStorage.getItem('token'))
     const headers = { 'Authorization': `Bearer ${usertoken}` };
     usertoken ?
@@ -85,6 +87,24 @@ export const asyncThunkApproveContractor = createAsyncThunk("get/asyncThunkAppro
         dispatch(showToast({ type: "error", message: "token expired ! please signin again" }))
 })
 
+// DECLINE_CONTRACTOR
+export const asyncThunkDeclineContractor = createAsyncThunk("patch/asyncThunkDeclineContractor", async (payload, { dispatch }) => {
+    const { usertoken } = JSON.parse(localStorage.getItem('token'))
+    const headers = { 'Authorization': `Bearer ${usertoken}` };
+    usertoken ?
+        await axios.patch(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_DECLINE_CONTRACTOR}`, payload, { headers })
+            .then(res => {
+                if (res.status !== 201) return
+                // dispatch(fetchApprovedContractorById({ ...res?.data, isAproved: true }))
+                dispatch(showToast({ type: "success", message: "Successfully decline contractor" }))
+            }).catch((error) => {
+                // dispatch(fetchApprovedContractorById({ ...error, isAproved: false }))
+                dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
+            })
+        :
+        dispatch(showToast({ type: "error", message: "token expired ! please signin again" }))
+})
+
 // GET_DETAILS_OF_CONTRACTOR
 export const asyncThunkGetDitailsOfContractor = createAsyncThunk("get/asyncThunkGetDitailsOfContractor", async (payload, { dispatch }) => {
     const { usertoken } = JSON.parse(localStorage.getItem('token'))
@@ -92,12 +112,30 @@ export const asyncThunkGetDitailsOfContractor = createAsyncThunk("get/asyncThunk
     usertoken ?
         await axios(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_GET_DETAILS_OF_CONTRACTOR + '?contractorId=' + payload?.contractorId}`, { headers })
             .then(res => {
-                console.log("res", res)
                 if (res.status !== 200) return
                 dispatch(fetchContractorById(res?.data?.data))
                 // dispatch(showToast({ type: "success", message: "Contractor Added Successfully" }))
             }).catch(() => {
                 dispatch(fetchContractorById([]))
+                dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
+            })
+        :
+        dispatch(showToast({ type: "error", message: "token expired ! please signin again" }))
+})
+
+// SEARCH_CONTRACTOR
+export const asyncThunkSearchContractors = createAsyncThunk("get/asyncThunkSearchContractors", async (payload, { dispatch }) => {
+    const { usertoken } = JSON.parse(localStorage.getItem('token'))
+    const headers = { 'Authorization': `Bearer ${usertoken}` };
+    usertoken ?
+        await axios(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_SEARCH_CONTRACTOR + '?searchQuery=' + payload}`, { headers })
+            .then(res => {
+                console.log("res", res)
+                if (res.status !== 200) return
+                dispatch(fetchAddContractor(res?.data))
+                // dispatch(showToast({ type: "success", message: "Contractor Added Successfully" }))
+            }).catch(() => {
+                dispatch(fetchAddContractor([]))
                 dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
             })
         :
