@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import New from '../../Component/New'
+import New from '../../Component/Popups/New'
 import SearchBar from '../../Component/SearchBar'
 import ClientsCard from '../../Component/common/ClientsCard'
 import './AdminContractorTab.css'

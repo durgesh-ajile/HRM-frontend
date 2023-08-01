@@ -2,12 +2,11 @@ import { useState } from 'react';
 import './New.css';
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch } from 'react-redux';
-import { asyncThunkAddContractor, asyncThunkGetContractor } from '../redux/createAsyncThunk';
-// import { BsFillGrid3X3GapFill } from "react-icons/bs";
-// import { HiBars3 } from "react-icons/hi2";
+import { asyncThunkAddContractor, asyncThunkGetContractor } from '../../redux/createAsyncThunk';
+import { Button } from '@mui/material';
+
 
 function New() {
-  // const [clients, setClients] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [clientDetails, setClientDetails] = useState({
     name: '',
@@ -52,7 +51,7 @@ function New() {
   return (
     <div className="App">
       <nav className="navbar">
-        <h1 className="navbar-heading">Contractor<br />Dashboard /<span> Contractor</span>
+        <h1 className="navbar-heading">Contractor<br />Dashboard /<span className='contractor-span'> Contractor</span>
         </h1>
         <div className="icon">
           {/* <BsFillGrid3X3GapFill className="icon1" />
@@ -67,12 +66,10 @@ function New() {
 
       {showPopup && (
         <div className="popup">
+        <div className="popup" onClick={closePopup}></div>
           <div className="popup-inner">
             <h2>Add Contractor</h2>
-            <button className="cross" onClick={closePopup}>
-              {" "}
-              <RxCross2 />
-            </button>
+            
             <form>
               <label htmlFor="name">First Name:</label>
               <input
@@ -101,9 +98,12 @@ function New() {
                 onChange={handleInputChange}
               />
 
-              <button type="button" onClick={handleAddContractor}>
-                Add
+              <button type="button" className='add-button' onClick={handleAddContractor}>
+                ADD
               </button>
+              <Button variant="outlined" color="error" sx={{mt:"15px"}} onClick={closePopup}>
+              Close
+            </Button>
             </form>
           </div>
         </div>
