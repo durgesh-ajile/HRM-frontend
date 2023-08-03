@@ -130,15 +130,23 @@ export const asyncThunkSearchContractors = createAsyncThunk("get/asyncThunkSearc
     const { usertoken } = JSON.parse(localStorage.getItem('token'))
     const headers = { 'Authorization': `Bearer ${usertoken}` };
     usertoken ?
-        await axios(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_SEARCH_CONTRACTOR + '?searchQuery=' + payload}`, { headers })
+        await axios(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_SEARCH_CONTRACTOR + `?searchQuery=${payload?.searchQuery}&page=${payload?.page}&limit=${payload?.limit}`}`, { headers })
             .then(res => {
                 console.log("res", res)
                 if (res.status !== 200) return
-                dispatch(fetchAddContractor(res?.data))
+                let modifiedRes = {
+                    status: res?.data?.status,
+                    data: [...res.data.data],
+                    page: res.data.pageInfo.currentPage,
+                    limit: res.data.pageInfo.limit,
+                    totalContractors: res.data.pageInfo.totalResults,
+                    totalPages: res.data.pageInfo.totalPages
+                }
+                dispatch(fetchAddContractor(modifiedRes))
                 dispatch(showToast({ type: "success", message: "Contractor Searched Successfully" }))
             }).catch((error) => {
                 console.error(error)
-                dispatch(showToast({ type: "error", message: error?.response?.data?.message  }))
+                dispatch(showToast({ type: "error", message: error?.response?.data?.message }))
             })
         :
         dispatch(showToast({ type: "error", message: "token expired ! please signin again" }))
