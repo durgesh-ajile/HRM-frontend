@@ -53,10 +53,6 @@ function New() {
       <nav className="navbar">
         <h1 className="navbar-heading">Contractor<br />Dashboard /<span className='contractor-span'> Contractor</span>
         </h1>
-        <div className="icon">
-          {/* <BsFillGrid3X3GapFill className="icon1" />
-          <HiBars3 className="icon2" /> */}
-        </div>
 
         <button className="add-client-btn" onClick={togglePopup}>
           Add Contractor

@@ -8,15 +8,16 @@ import Profile from './src/Component/profile/Profile'
 import { Alert, Snackbar } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideToast } from './src/redux/errorSlice/errorSlice'
-
+import Landing from './Landing'
+import "./src/App.css"
 
 function App() {
   // eslint-disable-next-line no-unused-vars
   const [routesData, setRoutesData] = useState([
-    { path: '/', component: <AdminContractorTab /> },
     { path: '/signin', component: <SignInPage /> },
     { path: '/registration', component: <Registration /> },
-    { path: '/profile/:contractorId', component: <Profile /> },
+    { path: '*', component: <Landing /> },
+
   ])
 
   const dispatch = useDispatch()
