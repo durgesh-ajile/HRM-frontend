@@ -26,10 +26,23 @@ import { Grid } from "@mui/joy";
 
 import EditIcon from "@mui/icons-material/Edit";
 import Cardss from "./Cards";
+import { useParams } from 'react-router-dom';
+import { useEffect } from "react";
+import { asyncThunkGetDitailsOfContractor } from "../../redux/createAsyncThunk";
+import { useDispatch, useSelector } from "react-redux";
+
 import "./cards.css";
 
 export default function Profile() {
-  const [color, setColor] = React.useState("neutral");
+
+  const { contractorId } = useParams();
+  const dispatch = useDispatch()
+  const { ContractorDataById } = useSelector(store => store.admin)
+  const { first_name, last_name, email } = ContractorDataById
+
+  useEffect(() => { const payload = { contractorId }; dispatch(asyncThunkGetDitailsOfContractor(payload)) }, [contractorId, dispatch])
+ 
+  console.log('ContractorDataById',ContractorDataById)
   return (
     <>
       <div className="section" style={{}}>

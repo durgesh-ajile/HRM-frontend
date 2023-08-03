@@ -6,12 +6,16 @@ import { validate } from '../schemas/validate'
 import { useState } from 'react';
 import { asyncThunkSignUp } from '../redux/createAsyncThunk';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Registration = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
+
+  const handleNavigate = () => navigate('/signin')
+
+
   const { SignUpData } = useSelector((store) => store.admin)
 
   const [checkboxes, setCheckboxes] = useState(
@@ -270,6 +274,7 @@ const Registration = () => {
             <label className="checkbox ml-3" htmlFor="checkbox3">
               Accept Terms of Services
             </label>
+            <Link to="/signin">Already Have an Account ? Please Sign In Here</Link>
           </div>
           <button type="submit" className="btn btn-primary button" >  Create Account</button>
         </form>

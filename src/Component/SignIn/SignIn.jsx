@@ -18,15 +18,16 @@ const SingIn = () => {
     const navigate = useNavigate()
     const { LoginData: { usertoken, expiry } } = useSelector((store) => store.admin)
 
+    const handleNavigate = () => navigate('/registration')
 
     const handleLogin = (event) => {
         event.preventDefault();
         dispatch(asyncThunkLogin({ "email": email, "password": password }))
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         usertoken && navigate('/')
-    },[navigate, usertoken])
+    }, [navigate, usertoken])
 
     return (
         <div className={styles.container}>
@@ -66,6 +67,19 @@ const SingIn = () => {
                         <Grid item>
                             <Link variant="body2" >
                                 Forgot password?
+                            </Link>
+                        </Grid>
+                    </Grid>
+                    <Grid container style={{ paddingTop: '10px' }}>
+                        {/* <Grid item xs >
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                        </Grid> */}
+                        <Grid item>
+                            <Link onClick={() => handleNavigate()} variant="body2" >
+                                Don't Have an Account ? Please Register Here
                             </Link>
                         </Grid>
                     </Grid>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './SearchBar.css';
-import { asyncThunkSearchContractors } from '../redux/createAsyncThunk';
+import { asyncThunkGetContractor, asyncThunkSearchContractors } from '../redux/createAsyncThunk';
 import { useDispatch } from 'react-redux';
 
 
@@ -11,6 +11,7 @@ function SearchBar() {
 
   const handleChangeSerch = (e) => {
     setInputValue(e.target.value)
+    e.target.value.length === 0 && dispatch(asyncThunkGetContractor(1));
   }
 
   const handleSubmit = () => {
