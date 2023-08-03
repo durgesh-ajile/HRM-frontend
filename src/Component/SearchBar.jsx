@@ -15,7 +15,12 @@ function SearchBar() {
   }
 
   const handleSubmit = () => {
-    dispatch(asyncThunkSearchContractors(inputValue))
+    const payload = {
+      searchQuery: inputValue,
+      page,
+      limit: 9
+    }
+    dispatch(asyncThunkSearchContractors(payload))
   }
 
   return (
