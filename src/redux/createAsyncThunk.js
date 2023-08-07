@@ -11,8 +11,9 @@ export const asyncThunkSignUp = createAsyncThunk("post/asyncThunkSignUp", async 
             dispatch(fetchSignUp({ ...res?.data?.data, isPageRedirect: true }))
             dispatch(showToast({ type: "success", message: "SignUp Successfully" }))
         }).catch(err => {
+            console.error(err)
             dispatch(fetchSignUp([]))
-            dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
+            dispatch(showToast({ type: "error", message: err?.response?.data?.message ? err?.response?.data?.message : "Something Went Wrong !" }))
             console.error(err);
         })
 })

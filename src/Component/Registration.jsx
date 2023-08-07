@@ -54,7 +54,10 @@ const Registration = () => {
           "repeat_password": values.c_pass
         }
         dispatch(asyncThunkSignUp(payload))
-        SignUpData?.isPageRedirect && navigate('/signin')
+        setTimeout(() => {
+          
+          SignUpData?.isPageRedirect && navigate('/signin')
+        }, 1000);
 
         // action.resetForm();
         // setCheckboxes((prevCheckboxes) => ({
