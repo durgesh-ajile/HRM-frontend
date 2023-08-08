@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { fetchSignUp, fetchLogin, fetchAddContractor, fetchContractorById, fetchApprovedContractorById } from "./admin/databaseSlice";
+import { fetchSignUp, fetchLogin, fetchAddContractor, fetchContractorById, fetchApprovedContractorById, fetchForgotPassword, fetchResetPassword } from "./admin/databaseSlice";
 import { showToast } from "./errorSlice/errorSlice";
 
 // SIGN_UP
@@ -101,6 +101,7 @@ export const asyncThunkDeclineContractor = createAsyncThunk("patch/asyncThunkDec
                 // dispatch(fetchApprovedContractorById({ ...res?.data, isAproved: true }))
                 dispatch(showToast({ type: "success", message: "Successfully decline contractor" }))
             }).catch((error) => {
+                console.error(error)
                 // dispatch(fetchApprovedContractorById({ ...error, isAproved: false }))
                 dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))
             })
@@ -133,7 +134,6 @@ export const asyncThunkSearchContractors = createAsyncThunk("get/asyncThunkSearc
     usertoken ?
         await axios(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_SEARCH_CONTRACTOR + `?searchQuery=${payload?.searchQuery}&page=${payload?.page}&limit=${payload?.limit}`}`, { headers })
             .then(res => {
-                console.log("res", res)
                 if (res.status !== 200) return
                 let modifiedRes = {
                     status: res?.data?.status,
@@ -151,5 +151,34 @@ export const asyncThunkSearchContractors = createAsyncThunk("get/asyncThunkSearc
             })
         :
         dispatch(showToast({ type: "error", message: "token expired ! please signin again" }))
+})
+
+// FORGOT_PASSWORD
+export const asyncThunkForgotPassword = createAsyncThunk("post/asyncThunkForgotPassword", async (payload, { dispatch }) => {
+    await axios.post(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_FORGOT_PASSWORD}`, payload)
+        .then(res => {
+            if (res.status !== 200) return
+            dispatch(fetchForgotPassword([{ ...res.data, isEmailSend: true }]))
+            dispatch(showToast({ type: "success", message: res.data.Messgae }))
+        }).catch((error) => {
+            console.error(error)
+            dispatch(fetchForgotPassword([{ isEmailSend: false }]))
+            dispatch(showToast({ type: "error", message: error?.response?.data?.message }))
+        })
+})
+
+// RESET_PASSWORD
+export const asyncThunkResetPassword = createAsyncThunk("post/asyncThunkResetPassword", async (payload, { dispatch }) => {
+    await axios.post(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_RESET_PASSWORD + `/${payload?.Token}`}`, payload?.inputValue)
+        .then(res => {
+            console.log("res", res)
+            if (res.status !== 200) return
+            dispatch(fetchResetPassword([{ ...res.data, isPasswordChanged: true }]))
+            dispatch(showToast({ type: "success", message: res.data.Messgae }))
+        }).catch((error) => {
+            console.error(error)
+            dispatch(fetchResetPassword([{ isPasswordChanged: false }]))
+            dispatch(showToast({ type: "error", message: error?.response?.data?.msg }))
+        })
 })
 

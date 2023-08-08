@@ -23,35 +23,41 @@ const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleLogout = ()=>{
+    localStorage.clear()
+    navigate("/signin")
+  }
 
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-          <ListItem disablePadding >
-            <ListItemButton>
-              <ListItemIcon>
-                 <Person3Outlined />
-              </ListItemIcon>
-              <ListItemText primary="All Contractor" onClick={()=>(navigate("/"))}/>
-            </ListItemButton>
-          </ListItem>
-          {/* <ListItem disablePadding >
-            <ListItemButton>
-              <ListItemIcon>
-                 <CalendarMonthOutlined />
-              </ListItemIcon>
-              <ListItemText primary="Calender" onClick={()=>{navigate("/calender")}} />
-            </ListItemButton>
-          </ListItem> */}
+        <ListItem disablePadding >
+          <ListItemButton>
+            <ListItemIcon>
+              <Person3Outlined />
+            </ListItemIcon>
+            <ListItemText primary="All Contractor" onClick={() => (navigate("/"))} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding >
+          <ListItemButton>
+            <ListItemIcon>
+              <CalendarMonthOutlined />
+            </ListItemIcon>
+            <ListItemText primary="LogOut" onClick={() => { handleLogout() }} />
+          </ListItemButton>
+        </ListItem>
       </List>
       {/* <Divider /> */}
-     
+
     </div>
   );
 
@@ -67,7 +73,7 @@ const navigate = useNavigate();
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar style={{backgroundColor:"white"}}>
+        <Toolbar style={{ backgroundColor: "white" }}>
           <IconButton
             color="black"
             aria-label="open drawer"
@@ -119,7 +125,7 @@ const navigate = useNavigate();
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-       
+
       </Box>
     </Box>
   );
