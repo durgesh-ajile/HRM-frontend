@@ -5,7 +5,9 @@ const initialState = {
   LoginData: [],
   ContractorData: [],
   ContractorDataById: [],
-  ApprovedContractorDataById:[],
+  ApprovedContractorDataById: [],
+  ForgotPasswordData: [],
+  ResetPasswordData: [],
 }
 
 export const adminSlice = createSlice({
@@ -28,9 +30,15 @@ export const adminSlice = createSlice({
     fetchApprovedContractorById: (state, action) => {
       state.ApprovedContractorDataById = action.payload
     },
+    fetchForgotPassword: (state, action) => {
+      state.ForgotPasswordData = action.payload
+    },
+    fetchResetPassword: (state, action) => {
+      state.ResetPasswordData = action.payload
+    },
   },
 })
 
-export const { fetchSignUp, fetchLogin, fetchAddContractor, fetchContractorById, fetchApprovedContractorById } = adminSlice.actions
+export const { fetchSignUp, fetchLogin, fetchAddContractor, fetchContractorById, fetchApprovedContractorById, fetchForgotPassword, fetchResetPassword } = adminSlice.actions
 
 export default adminSlice.reducer

@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import { asyncThunkLogin } from '../../redux/createAsyncThunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import AlertDialogSlide from '../common/AlertDialogSlide/AlertDialogSlide';
 
 
 const SingIn = () => {
@@ -66,7 +67,7 @@ const SingIn = () => {
                         </Grid>
                         <Grid item>
                             <Link variant="body2" >
-                                Forgot password?
+                                <AlertDialogSlide UI_Type={'ForgotPasswordUI'} />
                             </Link>
                         </Grid>
                     </Grid>

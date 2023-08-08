@@ -8,7 +8,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
 import { asyncThunkApproveContractor, asyncThunkDeclineContractor } from '../../redux/createAsyncThunk';
 import { useDispatch } from 'react-redux';
-import AlertDialogSlide from './AlertDialogSlide';
+import AlertDialogSlide from './AlertDialogSlide/AlertDialogSlide';
 
 // eslint-disable-next-line react/prop-types
 const ClientsCard = ({ value }) => {
@@ -47,7 +47,7 @@ const ClientsCard = ({ value }) => {
                         <WhiteButton onClick={() => handleApproveProfile(_id)} text={'Approve'} />
                     </Box>
                     <Box>
-                    <AlertDialogSlide _id={_id} />
+                    <AlertDialogSlide _id={_id} UI_Type={'DeclineUI'}/>
                     {/* <WhiteButton onClick={() => handleDeclineProfile(_id)} text={'Decline'} /> */}
                     </Box>
                 </Box>

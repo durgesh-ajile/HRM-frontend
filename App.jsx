@@ -10,12 +10,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { hideToast } from './src/redux/errorSlice/errorSlice'
 import Landing from './Landing'
 import "./src/App.css"
+import ResetPasswordPage from './src/Pages/ResetPasswordPage'
 
 function App() {
   // eslint-disable-next-line no-unused-vars
   const [routesData, setRoutesData] = useState([
     { path: '/signin', component: <SignInPage /> },
     { path: '/registration', component: <Registration /> },
+    { path: '/resetpassword/:resetPassToken', component: <ResetPasswordPage /> },
     { path: '*', component: <Landing /> },
 
   ])
