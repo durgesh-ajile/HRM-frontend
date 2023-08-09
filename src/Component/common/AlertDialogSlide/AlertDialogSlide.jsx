@@ -49,7 +49,7 @@ export default function AlertDialogSlide({ _id, UI_Type }) {
     const handleForgotPassword = () => {
         dispatch(asyncThunkForgotPassword(inputForgotPassword))
         setOpen(false);
-        navigate(`/registration`)
+        navigate(`/signin`)
         // const url = `https://www.google.com/search?q=${encodeURIComponent('https://mail.google.com/')}`;
         // window.open(url, '_blank');
         // navigate(`https://www.google.com/search?q=${`https://mail.google.com/`}`)
