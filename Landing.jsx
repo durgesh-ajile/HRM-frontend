@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 // import ReactBigCalendar from "./src/Pages/Calenders/Calender";
 import Profile from "./src/Component/profile/Profile";

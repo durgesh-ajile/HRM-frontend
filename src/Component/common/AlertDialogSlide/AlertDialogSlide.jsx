@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import WhiteButton from '../WhiteButton';
 import { Link, TextField } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { asyncThunkDeclineContractor, asyncThunkForgotPassword } from '../../../redux/createAsyncThunk';
 import { forwardRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

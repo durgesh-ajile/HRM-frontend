@@ -1,10 +1,8 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Registration from './src/Component/Registration'
-import AdminContractorTab from './src/Pages/AdminContractorTab/AdminContractorTab'
 import SignInPage from './src/Pages/SignInPage'
 import { useState } from 'react'
-import Profile from './src/Component/profile/Profile'
 import { Alert, Snackbar } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideToast } from './src/redux/errorSlice/errorSlice'
