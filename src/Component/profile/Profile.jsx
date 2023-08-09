@@ -1,11 +1,8 @@
-import * as React from "react";
 import "./Profile.css";
 import Box from "@mui/joy/Box";
 import Card from "@mui/joy/Card";
-import Divider from "@mui/joy/Divider";
 import List from "@mui/joy/List";
 import ListItem from "@mui/joy/ListItem";
-import Typography from "@mui/joy/Typography";
 import { Avatar, CardHeader } from "@mui/material";
 import { Grid } from "@mui/joy";
 
@@ -22,7 +19,6 @@ export default function Profile() {
   const { contractorId } = useParams();
   const dispatch = useDispatch()
   const { ContractorDataById } = useSelector(store => store.admin)
-  const { first_name, last_name, email } = ContractorDataById
 
   useEffect(() => { const payload = { contractorId }; dispatch(asyncThunkGetDitailsOfContractor(payload)) }, [contractorId, dispatch])
 
