@@ -20,14 +20,20 @@ export const asyncThunkSignUp = createAsyncThunk("post/asyncThunkSignUp", async 
 
 // LOGIN
 export const asyncThunkLogin = createAsyncThunk("post/asyncThunkLogin", async (payload, { dispatch }) => {
-    await axios.post(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_LOGIN}`, payload)
+    const reqData = {
+        email: payload.email,
+        password: payload.password,
+      };
+    await axios.post(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_LOGIN}`, reqData)
         .then(res => {
             if (res.status !== 201) return
             dispatch(fetchLogin(res?.data?.Token))
+            payload.setAuthScreen(false);
             dispatch(showToast({ type: "success", message: "Login Successfully" }))
+            payload.navigateAfterLogin();
         }).catch((error) => {
-            console.error(error)
             dispatch(fetchLogin([]))
+            payload.setAuthScreen(false);
             dispatch(showToast({ type: "error", message: error?.response?.data?.message }))
         })
 })
