@@ -58,14 +58,6 @@ const Registration = () => {
           
           SignUpData?.isPageRedirect && navigate('/signin')
         }, 1000);
-
-        // action.resetForm();
-        // setCheckboxes((prevCheckboxes) => ({
-        //   ...prevCheckboxes,
-        //   checkbox1: false,
-        //   checkbox2: false,
-        //   checkbox3: false,
-        // }));
       }
     }
   );
@@ -89,7 +81,7 @@ const Registration = () => {
 
           <div className="input-group mb-3 username">
             <label className="form-label input-group input-group-lg  label-name "
-              htmlFor='username'>Username</label>
+              htmlFor='username'>User name</label>
             <span className="input-group-text" ><BsPersonCircle /></span>
             <input type="text" className="form-control" placeholder="Username" aria-label="Username"
               autoComplete='off'
@@ -99,18 +91,22 @@ const Registration = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               aria-describedby="basic-addon1" />
+              {errors.username && touched.username ?
+                  (<small className='form-error'>{errors.username}</small>)
+                  : null}
           </div>
+          
 
           <div className='fullname  input-group  mb-3'>
             <div className=" Email">
               <div className="input-group  name ">
                 <label className="form-label input-group input-group-lg  label-name "
-                  htmlFor='fname'>FirstName</label>
-                <div className="input-group   first-name">
+                  htmlFor='fname'>First Name</label>
+                <div className="input-group  mb-1 first-name">
 
                   <span className="input-group-text" > <BsPersonCircle />
                   </span>
-                  <input type="name" className="form-control input-form " placeholder="Firstname"
+                  <input type="name" className="form-control input-form" placeholder="First name"
                     aria-label="Username" aria-describedby="basic-addon1"
                     required
                     autoComplete='off'
@@ -131,13 +127,13 @@ const Registration = () => {
             <div className=" Email">
               <div className="input-group  name ">
                 <label className="form-label  input-group label-name  "
-                  htmlFor='lname'>LastName</label>
+                  htmlFor='lname'>Last Name</label>
 
-                <div className="input-group  last-name">
+                <div className="input-group mb-1 last-name">
 
                   <span className="input-group-text " ><BsPersonCircle /></span>
                   <input type="name" className="form-control input-form "
-                    placeholder="Lastname"
+                    placeholder="Last name"
                     autoComplete='off'
                     id='lname'
                     name='lname'
@@ -155,7 +151,7 @@ const Registration = () => {
           </div>
           <div className='email-section '>
             <div className='Email'>
-              <div className="input-group mb-3 emailform ">
+              <div className="input-group mb-1 emailform ">
                 <label className="input-group  form-label label-name"
                   htmlFor='email'> Email address</label>
 
@@ -174,9 +170,9 @@ const Registration = () => {
                 : null}
             </div>
             <div className='Email'>
-              <div className="input-group mb-3 emailform ">
+              <div className="input-group mb-1 emailform ">
                 <label className="input-group  form-label label-name"
-                  htmlFor='c_email'>Repeat Email address</label>
+                  htmlFor='c_email'>Confirm email address</label>
 
                 <span className="input-group-text" id="basic-addon1">@</span>
                 <input type="email" className="form-control input-form" placeholder="Email" autoComplete='off'
@@ -197,7 +193,7 @@ const Registration = () => {
 
           <div className='email-section '>
             <div className='Email'>
-              <div className="input-group mb-3 emailform ">
+              <div className="input-group mb-1 emailform ">
                 <label className="input-group  form-label label-name"
                   htmlFor='password'> Password</label>
 
@@ -216,7 +212,7 @@ const Registration = () => {
                 : null}
             </div>
             <div className='Email'>
-              <div className="input-group mb-3 emailform ">
+              <div className="input-group mb-1 emailform ">
                 <label className="input-group  form-label label-name"
                   htmlFor='c_pass'>Confirm Password </label>
 
@@ -238,7 +234,7 @@ const Registration = () => {
 
 
 
-          <div className="mb-3 form-check ">
+          {/* <div className="mb-3 form-check ">
             <input
               type="checkbox"
               id="checkbox1"
@@ -264,8 +260,8 @@ const Registration = () => {
             <label className="checkbox ml-3" htmlFor="checkbox2">
               Subscribe to Monthly Newsletter
             </label>
-          </div>
-          <div className="mb-3 form-check ">
+          </div> */}
+          {/* <div className="mb-3 form-check ">
             <input
               type="checkbox"
               id="checkbox3"
@@ -277,9 +273,16 @@ const Registration = () => {
             <label className="checkbox ml-3" htmlFor="checkbox3">
               Accept Terms of Services
             </label>
-            <Link to="/signin">Already Have an Account ? Please Sign In Here</Link>
+            <br/>
+          </div> */}  
+          <div className='sub-div'>
+          <div>
+          <Link to="/signin">Already Have an Account ? Please Sign In Here</Link>
+</div>
+<div style={{display:'flex', justifyContent:'flex-end'}}>
+          <button type="submit" className="btn btn-primary" >  Create Account</button>
           </div>
-          <button type="submit" className="btn btn-primary button" >  Create Account</button>
+          </div>
         </form>
       </div>
     </>

@@ -39,7 +39,7 @@ border-radius: 1rem;
 {
   width: 100%;
   display: flex;
-justify-content: space-evenly;
+/* justify-content: space-evenly; */
 }
 
 
@@ -51,6 +51,12 @@ justify-content: space-evenly;
   justify-content: start;
   align-items: flex-start;
 
+}
+.sub-div{
+  padding: 0 25px 20px;
+}
+.sub-div button{
+  margin-top: 10px
 }
 
 .form-error
@@ -95,7 +101,9 @@ justify-content: space-evenly;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 9px;
 }
+
 .Email
 {
   width: 45%;

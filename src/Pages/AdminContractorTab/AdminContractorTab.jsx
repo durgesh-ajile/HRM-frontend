@@ -85,13 +85,15 @@ const AdminContractorTab = () => {
                         })
                     }
                 </Box>
+                <Box className={'AdminContractorTab_pagination'} >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Box sx={{marginLeft:'20px'}}>
                         <WhiteButton onClick={handlePrevPagination} text={'prev'} />
                     </Box>
                     <Box sx={{marginRight:'20px'}}>
                         <WhiteButton onClick={handleNextPagination} text={'next'} />
-                    </Box>
+                        </Box>
+            </Box>
                 </Box>
             </Box>
         </ Box>
