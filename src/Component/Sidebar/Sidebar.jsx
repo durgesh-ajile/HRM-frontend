@@ -16,6 +16,8 @@ import Toolbar from '@mui/material/Toolbar';
 // import Typography from '@mui/material/Typography';
 import { AdminPanelSettingsSharp, AppRegistrationTwoTone, CalendarMonthOutlined, LoginTwoTone, Person3Outlined, PersonOffRounded } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { fetchLogin } from '../../redux/admin/databaseSlice';
+import { useDispatch } from 'react-redux';
 
 
 const drawerWidth = 240;
@@ -24,6 +26,7 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -32,6 +35,7 @@ function ResponsiveDrawer(props) {
   const handleLogout = ()=>{
     localStorage.clear()
     navigate("/signin")
+    dispatch(fetchLogin([]))
   }
 
   const drawer = (
