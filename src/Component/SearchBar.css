@@ -1,6 +1,7 @@
 .client-search-form {
   display: flex;
   justify-content: center;
+  background-color: #f5faff;
 
 }
 
@@ -34,7 +35,7 @@
 
 .form-row button {
   padding: 10px 95px;
-  background-color: #f2f2f2;
+  background-color: #f5faff;
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;

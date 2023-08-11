@@ -72,7 +72,7 @@ export default function Profile() {
                 {/* <button onClick={() => handleNavigateToCalendar('/calender')} id='btn' style={{ marginTop: "10px", height: "40px", width: "160px", border: "none", borderRadius: "3%" }}>Calendar</button> */}
                 <button 
                 // onClick={() => handleNavigateToCalendar('/contractorform/petchUpdate')} 
-                id='btn' style={{ marginTop: "10px", height: "40px", width: "160px", border: "none", borderRadius: "3%" }}>Update Profile</button>
+                id='btn' style={{ marginTop: "10px", height: "40px", width: "160px", border: "none", borderRadius: "3%" }}>Profile</button>
 
               </Grid>
 
