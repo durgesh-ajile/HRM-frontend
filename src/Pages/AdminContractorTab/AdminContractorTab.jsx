@@ -86,8 +86,10 @@ const AdminContractorTab = () => {
                         })
                     }
                 </Box>
+                <Box className={'AdminContractorTab_pagination'} >
                 <WhiteButton onClick={handlePrevPagination} text={'prev'} />
                 <WhiteButton onClick={handleNextPagination} text={'next'} />
+                </Box>
             </Box>
         </ Box>
     )
