@@ -8,7 +8,6 @@ import WhiteButton from '../../Component/common/WhiteButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { asyncThunkGetContractor, asyncThunkSearchContractors } from '../../redux/createAsyncThunk'
 import { showToast } from '../../redux/errorSlice/errorSlice'
-import SearchBar from '../../Component/SearchBar'
 
 
 const AdminContractorTab = () => {
@@ -86,8 +85,14 @@ const AdminContractorTab = () => {
                         })
                     }
                 </Box>
-                <WhiteButton onClick={handlePrevPagination} text={'prev'} />
-                <WhiteButton onClick={handleNextPagination} text={'next'} />
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{marginLeft:'20px'}}>
+                        <WhiteButton onClick={handlePrevPagination} text={'prev'} />
+                    </Box>
+                    <Box sx={{marginRight:'20px'}}>
+                        <WhiteButton onClick={handleNextPagination} text={'next'} />
+                    </Box>
+                </Box>
             </Box>
         </ Box>
     )
