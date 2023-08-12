@@ -65,8 +65,6 @@ export const asyncThunkGetContractor = createAsyncThunk("post/asyncThunkGetContr
         await axios(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_GET_CONTRACTOR + '?page=' + payload}`, { headers })
             .then(res => {
                 if (res.status !== 200) return
-                console.log("res", res)
-
                 dispatch(fetchAddContractor(res?.data))
                 // dispatch(showToast({ type: "success", message: "Contractor Added Successfully" }))
             }).catch((error) => {
@@ -177,7 +175,6 @@ export const asyncThunkForgotPassword = createAsyncThunk("post/asyncThunkForgotP
 export const asyncThunkResetPassword = createAsyncThunk("post/asyncThunkResetPassword", async (payload, { dispatch }) => {
     await axios.post(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_RESET_PASSWORD + `/${payload?.Token}`}`, payload?.inputValue)
         .then(res => {
-            console.log("res", res)
             if (res.status !== 200) return
             dispatch(fetchResetPassword([{ ...res.data, isPasswordChanged: true }]))
             dispatch(showToast({ type: "success", message: res.data.Messgae }))

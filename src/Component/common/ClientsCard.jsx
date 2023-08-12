@@ -15,7 +15,7 @@ const ClientsCard = ({ value }) => {
 
     const navigate = useNavigate()
     // eslint-disable-next-line react/prop-types
-    const { first_name, last_name, email, _id } = value;
+    const { first_name, last_name, email, _id, profileId } = value;
     // const count = useSelector((state) => state.counter.value)
     const dispatch = useDispatch()
 
@@ -24,12 +24,9 @@ const ClientsCard = ({ value }) => {
     // const handleDeclineProfile = (contractorId) => { const payload = { contractorId }; dispatch(asyncThunkDeclineContractor(payload)) }
 
     return (<>
-    
+
         <Card sx={{ width: "300px", backgroundColor: '#ffffff', display: 'flex', justifyContent: 'center', textAlign: 'center', marginBottom: '10px' }}>
             <CardContent sx={{ width: '100%' }}>
-                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
-                    <MoreVertIcon sx={{ cursor: 'pointer', fontSize: '30px', color: 'gray' }} />
-                </Box>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <AvatarComponent />
                 </Box>
@@ -47,8 +44,11 @@ const ClientsCard = ({ value }) => {
                         <WhiteButton onClick={() => handleApproveProfile(_id)} text={'Approve'} />
                     </Box>
                     <Box>
-                    <AlertDialogSlide _id={_id} UI_Type={'DeclineUI'}/>
-                    {/* <WhiteButton onClick={() => handleDeclineProfile(_id)} text={'Decline'} /> */}
+                         {/* eslint-disable-next-line react/prop-types */}
+                        {/* {profileId?.IsDecline &&  */}
+                        <AlertDialogSlide _id={_id} UI_Type={'DeclineUI'} />
+                        {/* } */}
+                        {/* <WhiteButton onClick={() => handleDeclineProfile(_id)} text={'Decline'} /> */}
                     </Box>
                 </Box>
                 <Box>

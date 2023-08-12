@@ -22,9 +22,7 @@ const AdminContractorTab = () => {
   const navigate = useNavigate();
   let currentDate = new Date();
 
-  const {
-    ContractorData: { totalPages, totalContractors, page: pageIndicator, data },
-  } = useSelector((store) => store.admin);
+  const { ContractorData: { totalPages, totalContractors, page: pageIndicator, data }, } = useSelector((store) => store.admin);
   const payload = { searchQuery, page, limit };
 
   const handleChangeSerch = (e) => {
@@ -70,21 +68,9 @@ const AdminContractorTab = () => {
     try {
       token = JSON.parse(localStorage.getItem("token"));
       tokenExpiry = new Date(token.expiry);
-
-      token === null &&
-        dispatch(
-          showToast({
-            type: "warning",
-            message: "Token Has Expired ! Please SignIn Again",
-          })
-        );
+      token === null && dispatch(showToast({ type: "warning", message: "Token Has Expired ! Please SignIn Again", }));
     } catch (error) {
-      dispatch(
-        showToast({
-          type: "warning",
-          message: "Token Has Expired ! Please SignIn Again",
-        })
-      );
+      dispatch(showToast({ type: "warning", message: "Token Has Expired ! Please SignIn Again", }));
     }
     !token?.usertoken && navigate("/signin");
     if (currentDate > tokenExpiry) {
@@ -96,9 +82,7 @@ const AdminContractorTab = () => {
   }, [data, dispatch, navigate]);
 
   useEffect(() => {
-    isSearch
-      ? dispatch(asyncThunkSearchContractors(payload))
-      : dispatch(asyncThunkGetContractor(page));
+    isSearch ? dispatch(asyncThunkSearchContractors(payload)) : dispatch(asyncThunkGetContractor(page));
   }, [dispatch, page]);
 
   return (
@@ -126,21 +110,22 @@ const AdminContractorTab = () => {
         <Box className={"AdminContractorTab_container_fluid"}>
           {ContractorData
             ? ContractorData.map((value, i) => (
-                <Box key={i}>
-                  <ClientsCard value={value} />
-                </Box>
-              ))
+              <Box key={i}>
+                <ClientsCard value={value}  />
+              </Box>
+            ))
             : [...Array(limit)].map((_, index) => (
-                <div key={index} className="skeletonDiv">
-                  <span className="loader"></span>
-                </div>
-              ))}
+              <div key={index} className="skeletonDiv">
+                <span className="loader"></span>
+              </div>
+            ))}
         </Box>
         <Box className={"AdminContractorTab_pagination"}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box sx={{ marginLeft: "20px" }}>
               <WhiteButton onClick={handlePrevPagination} text={"prev"} />
             </Box>
+            <p style={{padding:'7px'}}>Total Pages :- {totalPages}, Current Page :-{pageIndicator}</p>
             <Box sx={{ marginRight: "20px" }}>
               <WhiteButton onClick={handleNextPagination} text={"next"} />
             </Box>
