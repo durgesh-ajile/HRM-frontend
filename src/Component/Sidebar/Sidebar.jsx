@@ -39,10 +39,10 @@ function ResponsiveDrawer(props) {
   }
 
   const drawer = (
-    <div>
+    <div >
       <Toolbar />
       <Divider />
-      <List style={{ backgroundColor: "#27374D", height: "91.40vh"}} >
+      <List >
         <ListItem disablePadding >
           <ListItemButton >
             <ListItemIcon style={{color: "#FFFFFF"}}>
@@ -109,7 +109,7 @@ function ResponsiveDrawer(props) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, backgroundColor: "#27374D" },
           }}
         >
           {drawer}
@@ -118,7 +118,7 @@ function ResponsiveDrawer(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, backgroundColor: "#27374D" },
           }}
           open
         >
