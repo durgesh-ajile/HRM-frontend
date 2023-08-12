@@ -42,21 +42,21 @@ function ResponsiveDrawer(props) {
     <div>
       <Toolbar />
       <Divider />
-      <List>
+      <List style={{ backgroundColor: "#27374D", height: "91.40vh"}} >
         <ListItem disablePadding >
-          <ListItemButton>
-            <ListItemIcon>
+          <ListItemButton >
+            <ListItemIcon style={{color: "#FFFFFF"}}>
               <Person3Outlined />
             </ListItemIcon>
-            <ListItemText primary="All Contractor" onClick={() => (navigate("/"))} />
+            <ListItemText style={{color: "#FFFFFF"}} primary="All Contractor" onClick={() => (navigate("/"))} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding >
-          <ListItemButton>
-            <ListItemIcon>
+          <ListItemButton >
+            <ListItemIcon style={{color: "#FFFFFF"}}>
               <CalendarMonthOutlined />
             </ListItemIcon>
-            <ListItemText primary="LogOut" onClick={() => { handleLogout() }} />
+            <ListItemText style={{color: "#FFFFFF"}} primary="LogOut" onClick={() => { handleLogout() }} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -68,16 +68,17 @@ function ResponsiveDrawer(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', flexDirection: "column" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          width: "100%", // Full width
+          zIndex: (theme) => theme.zIndex.drawer + 1, // Ensure it's above the drawer
+          backgroundColor: "#F1F6F9",
         }}
       >
-        <Toolbar style={{ backgroundColor: "white" }}>
+        <Toolbar >
           <IconButton
             color="black"
             aria-label="open drawer"
