@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./Sign.module.css";
 import { BsPersonCircle } from "react-icons/bs";
 import { AiFillLock } from "react-icons/ai";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { asyncThunkLogin } from "../../redux/createAsyncThunk";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AlertDialogSlide from "../common/AlertDialogSlide/AlertDialogSlide";
-import { useCallback } from "react";
 
 const SingIn = () => {
   const [email, setEmail] = useState("");
@@ -18,9 +15,7 @@ const SingIn = () => {
   const [authScreen, setAuthScreen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    LoginData: { usertoken, expiry },
-  } = useSelector((store) => store.admin);
+  const { LoginData: { usertoken, expiry } } = useSelector((store) => store.admin);
 
   const handleNavigate = () => navigate("/registration");
 
@@ -49,9 +44,9 @@ const SingIn = () => {
     );
   };
 
-//   useEffect(() => {
-//     usertoken && navigate("/");
-//   }, [navigate, usertoken]);
+  //   useEffect(() => {
+  //     usertoken && navigate("/");
+  //   }, [navigate, usertoken]);
 
   return (
     <div className={styles.container}>
