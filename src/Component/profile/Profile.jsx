@@ -146,9 +146,6 @@ export default function Profile() {
                       </ListItem>
                       <ListItem>
                         <ListItem style={{ gap: "10px", color: "blue", fontWeight: "666" }}>
-                          <Avatar  >
-                            <img src={'https://mui.com/static/images/avatar/3.jpg'} style={{ height: "100%", width: "100%", objectFit: "cover", objectPosition: "center" }} />
-                          </Avatar>
                           {ContractorDataById?.profileId?.ReportTo}
                         </ListItem>
                       </ListItem>
