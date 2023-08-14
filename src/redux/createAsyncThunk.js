@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { fetchSignUp, fetchLogin, fetchAddContractor, fetchContractorById, fetchApprovedContractorById, fetchForgotPassword, fetchResetPassword } from "./admin/databaseSlice";
 import { showToast } from "./errorSlice/errorSlice";
+import { useNavigate } from "react-router-dom";
 
 // SIGN_UP
 export const asyncThunkSignUp = createAsyncThunk("post/asyncThunkSignUp", async (payload, { dispatch }) => {
@@ -23,7 +24,7 @@ export const asyncThunkLogin = createAsyncThunk("post/asyncThunkLogin", async (p
     const reqData = {
         email: payload.email,
         password: payload.password,
-      };
+    };
     await axios.post(`${import.meta.env.VITE_BASE_URL + import.meta.env.VITE_LOGIN}`, reqData)
         .then(res => {
             if (res.status !== 201) return
@@ -122,7 +123,8 @@ export const asyncThunkGetDitailsOfContractor = createAsyncThunk("get/asyncThunk
             .then(res => {
                 if (res.status !== 200) return
                 dispatch(fetchContractorById(res?.data?.data))
-                // dispatch(showToast({ type: "success", message: "Contractor Added Successfully" }))
+                !res?.data?.data?.profileId &&
+                    dispatch(showToast({ type: "warning", message: "Contractor Has Not Fill The Form." }))
             }).catch(() => {
                 dispatch(fetchContractorById([]))
                 dispatch(showToast({ type: "error", message: "Something Went Wrong !" }))

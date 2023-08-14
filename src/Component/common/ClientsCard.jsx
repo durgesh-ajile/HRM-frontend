@@ -27,6 +27,9 @@ const ClientsCard = ({ value }) => {
 
         <Card sx={{ width: "300px", backgroundColor: '#ffffff', display: 'flex', justifyContent: 'center', textAlign: 'center', marginBottom: '10px' }}>
             <CardContent sx={{ width: '100%' }}>
+                <Typography sx={{ fontSize: 20, marginTop: '15px', fontWeight: '700' }} color="text.secondary" gutterBottom>
+                    {profileId?.IsApproved && <p>&#10004; </p>}
+                </Typography>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <AvatarComponent />
                 </Box>
@@ -41,14 +44,10 @@ const ClientsCard = ({ value }) => {
                 </Typography>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '10px' }}>
                     <Box sx={{ marginRight: '10px' }}>
-                        <WhiteButton onClick={() => handleApproveProfile(_id)} text={'Approve'} />
+                        {!profileId?.IsApproved && <WhiteButton onClick={() => handleApproveProfile(_id)} text={'Approve'} />}
                     </Box>
                     <Box>
-                         {/* eslint-disable-next-line react/prop-types */}
-                        {/* {profileId?.IsDecline &&  */}
-                        <AlertDialogSlide _id={_id} UI_Type={'DeclineUI'} />
-                        {/* } */}
-                        {/* <WhiteButton onClick={() => handleDeclineProfile(_id)} text={'Decline'} /> */}
+                        {!profileId?.IsApproved && <AlertDialogSlide _id={_id} UI_Type={'DeclineUI'} />}
                     </Box>
                 </Box>
                 <Box>
