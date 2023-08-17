@@ -8,7 +8,7 @@ import { Grid } from "@mui/joy";
 
 import Cardss from "./Cards";
 import { useParams } from 'react-router-dom';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { asyncThunkGetDitailsOfContractor } from "../../redux/createAsyncThunk";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,10 +20,31 @@ export default function Profile() {
   const { contractorId } = useParams();
   const dispatch = useDispatch()
   const { ContractorDataById } = useSelector(store => store.admin)
+  const [formattedDate, setFormattedDate] = useState();
 
   useEffect(() => {
     const payload = { contractorId };
     dispatch(asyncThunkGetDitailsOfContractor(payload))
+
+    
+
+        // Create a Date object with the provided date and time
+        const dateString = "Sat Aug 05 2023 05:30:00 GMT+0530";
+        const dateObject = new Date(dateString);
+
+        // Extract the components of the date
+        const day = dateObject.getDate();
+        const month = dateObject.getMonth() + 1; // Months are zero-based, so add 1
+        const year = dateObject.getFullYear() % 100; // Extract last two digits of the year
+
+        // Pad the components with leading zeros if needed
+        const formattedDay = day < 10 ? `0${day}` : day;
+        const formattedMonth = month < 10 ? `0${month}` : month;
+        const formattedYear = year < 10 ? `0${year}` : year;
+
+        // Combine the components into the desired format
+        `${formattedDay}/${formattedMonth}/${formattedYear}`;
+        setFormattedDate(`${formattedDay}/${formattedMonth}/${formattedYear}`)
   }, [contractorId, dispatch])
 
   return (
@@ -128,7 +149,7 @@ export default function Profile() {
                       <ListItem>
                         <ListItem style={{ color: "gray", fontWeight: "666" }}>
 
-                          {ContractorDataById?.profileId?.Birthday}
+                         {formattedDate} 
                         </ListItem>
                       </ListItem>
                       <ListItem>
@@ -152,9 +173,9 @@ export default function Profile() {
                     </List>
                   </ListItem>
                 </List>
-                <span style={{ height: "39px", width: "39px", backgroundColor: "lightgray", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "20px", marginLeft: "10px" }} >
-                  {/* <EditIcon color="disabled" /> */}
-                </span>
+                {/* <span style={{ height: "39px", width: "39px", backgroundColor: "lightgray", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "20px", marginLeft: "10px" }} >
+                  <EditIcon color="disabled" />
+                </span> */}
               </Box>
 
             </Card >
