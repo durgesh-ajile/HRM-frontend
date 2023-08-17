@@ -85,6 +85,7 @@ export const asyncThunkApproveContractor = createAsyncThunk("patch/asyncThunkApp
             .then(res => {
                 if (res.status !== 201) return
                 dispatch(fetchApprovedContractorById({ ...res?.data, isAproved: true }))
+                dispatch(asyncThunkGetContractor(1))
                 dispatch(showToast({ type: "success", message: "Successfully approved contractor" }))
             }).catch((error) => {
                 dispatch(fetchApprovedContractorById({ ...error, isAproved: false }))
