@@ -8,45 +8,35 @@ import { asyncThunkLogin } from "../../redux/createAsyncThunk";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AlertDialogSlide from "../common/AlertDialogSlide/AlertDialogSlide";
+import { showToast } from "../../redux/errorSlice/errorSlice";
 
 const SingIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authScreen, setAuthScreen] = useState(false);
+  const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { LoginData: { usertoken, expiry } } = useSelector((store) => store.admin);
 
   const handleNavigate = () => navigate("/registration");
 
-  // const handleLogin = useCallback((event) => {
-  //     event.preventDefault();
-  //     dispatch(asyncThunkLogin({ "email": email, "password": password }))
-  // },[dispatch, email, password]);
-
   const handleLogin = (event) => {
     event.preventDefault();
-    setAuthScreen(true);
 
-    const navigateAfterLogin = () => {
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-    };
+    if (isValid) {
+      setAuthScreen(true);
 
-    dispatch(
-      asyncThunkLogin({
-        email: email,
-        password: password,
-        navigateAfterLogin: navigateAfterLogin,
-        setAuthScreen: setAuthScreen,
-      })
-    );
+      const navigateAfterLogin = () => setTimeout(() => navigate("/"), 2000)
+
+      dispatch(asyncThunkLogin({
+        email: email, password: password, navigateAfterLogin: navigateAfterLogin, setAuthScreen: setAuthScreen,
+      }));
+    } else {
+      dispatch(showToast({ type: "warning", message: "Email Type Should be @ajiledone.com" }))
+
+    }
   };
-
-  //   useEffect(() => {
-  //     usertoken && navigate("/");
-  //   }, [navigate, usertoken]);
 
   return (
     <div className={styles.container}>
@@ -68,9 +58,12 @@ const SingIn = () => {
             <input
               type="email"
               className="form-control py-2"
-              placeholder="Enter your email"
+              placeholder="Example@ajiledone.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setIsValid(e.target.value.endsWith('@ajiledone.com'))
+              }}
               required
             />
           </div>

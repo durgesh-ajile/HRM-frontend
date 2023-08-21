@@ -49,7 +49,7 @@ const Cards = ({ ContractorDataById }) => {
   return (
     <>
 
-      <Box sx={{ display: 'flex', marginTop: '30px', justifyContent: 'center', flexDirection: { xs: 'column', lg: 'row' } }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: { xs: 'column', lg: 'row' } }}>
         <Box>
           <TableContainer component={Paper} sx={{ width: '400px', border: '1px solid gray', borderRadius: '10px', marginRight: '20px' }} >
             <Table aria-label="simple table">
