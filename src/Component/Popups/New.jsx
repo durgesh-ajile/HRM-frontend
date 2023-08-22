@@ -4,10 +4,12 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch } from 'react-redux';
 import { asyncThunkAddContractor, asyncThunkGetContractor } from '../../redux/createAsyncThunk';
 import { Button } from '@mui/material';
+import { showToast } from '../../redux/errorSlice/errorSlice';
 
 
 function New() {
   const [showPopup, setShowPopup] = useState(false);
+  const [isValid, setIsValid] = useState(false);
   const [clientDetails, setClientDetails] = useState({
     name: '',
     email: '',
@@ -29,9 +31,11 @@ function New() {
       ...prevDetails,
       [name]: value,
     }));
+    setIsValid(value.endsWith('@ajiledone.com'))
   };
 
   const handleAddContractor = () => {
+    // if (isValid) {
     const payload = {
       "first_name": clientDetails.name,
       "last_name": clientDetails.email,
@@ -39,13 +43,10 @@ function New() {
     }
     dispatch(asyncThunkAddContractor(payload))
     dispatch(asyncThunkGetContractor(1));
-    // setClients((prevClients) => [...prevClients, clientDetails]);
-    // setClientDetails({
-    //   name: '',
-    //   email: '',
-    //   phone: '',
-    // });
     closePopup();
+    // } else {
+    //   dispatch(showToast({ type: "warning", message: "Email Type Should be @ajiledone.com" }))
+    // }
   };
 
   return (
@@ -62,10 +63,10 @@ function New() {
 
       {showPopup && (
         <div className="popup">
-        <div className="popup" onClick={closePopup}></div>
+          <div className="popup" onClick={closePopup}></div>
           <div className="popup-inner">
             <h2>Add Contractor</h2>
-            
+
             <form>
               <label htmlFor="name">First Name:</label>
               <input
@@ -97,9 +98,9 @@ function New() {
               <button type="button" className='add-button' onClick={handleAddContractor}>
                 ADD
               </button>
-              <Button variant="outlined" color="error" sx={{mt:"15px"}} onClick={closePopup}>
-              Close
-            </Button>
+              <Button variant="outlined" color="error" sx={{ mt: "15px" }} onClick={closePopup}>
+                Close
+              </Button>
             </form>
           </div>
         </div>
