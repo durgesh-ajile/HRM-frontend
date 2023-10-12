@@ -186,4 +186,36 @@ gap: 40px;
     width: 10%;
     font-size: 0.65rem;
   }
+/* ----------------Changes in Profile page  ----------------- */
+
+  #bx-ftr{
+    margin-left: 21rem;
+  }
+  #bxx-1{
+    padding-left: 13rem;
+  }
+  .row{
+    justify-content: flex-end;
+    margin-right: 3rem;
+  }
+}
+@media (min-width:912px) and (max-width:1250px){
+  #bx-ftr{
+    margin-left: 21rem;
+  }
+  #bxx-1{
+    padding-left: 13rem;
+  }
+  .row{
+    justify-content: flex-end;
+    /* margin-right: 3rem; */
+    margin-left: 15rem;
+
+  }
+  .card{
+    width: 27rem;
+    /* margin-left: 8rem; */
+
+  }
+
 }

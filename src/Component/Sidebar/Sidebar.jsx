@@ -15,7 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 // import Typography from '@mui/material/Typography';
 import { AdminPanelSettingsSharp, AppRegistrationTwoTone, CalendarMonthOutlined, LoginTwoTone, Person3Outlined, PersonOffRounded } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchLogin } from '../../redux/admin/databaseSlice';
 import { useDispatch } from 'react-redux';
 
@@ -27,7 +27,18 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location  = useLocation();
+  const { expiry } = JSON.parse(localStorage.getItem("token"));
 
+  let currentDate = new Date();
+
+  React.useEffect(() => {
+    if (!expiry || (currentDate > expiry)) {
+      navigate("/signin");
+    }
+  }, []);
+
+  console.log(currentDate > expiry)
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -44,11 +55,19 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List >
         <ListItem disablePadding >
-          <ListItemButton >
-            <ListItemIcon style={{color: "#FFFFFF"}}>
-              <Person3Outlined />
+          <ListItemButton style={location.pathname === '/' ? {background: 'white', color:'black'} : {background: '#34495E', color:'white'}} >
+            <ListItemIcon>
+              <Person3Outlined style={location.pathname === '/' ? {color:'black'} : {color:'white'}} />
             </ListItemIcon>
-            <ListItemText style={{color: "#FFFFFF"}} primary="All Contractor" onClick={() => (navigate("/"))} />
+            <ListItemText primary="All Contractors" onClick={() => (navigate("/"))} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding >
+          <ListItemButton style={location.pathname === '/organizations' ? {background: 'white', color:'black'} : {background: '#34495E', color:'white'}} >
+            <ListItemIcon>
+              <Person3Outlined style={location.pathname === '/organizations' ? {color:'black'} : {color:'white'}} />
+            </ListItemIcon>
+            <ListItemText primary="Client-Organization" onClick={() => (navigate("/organizations"))} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding >

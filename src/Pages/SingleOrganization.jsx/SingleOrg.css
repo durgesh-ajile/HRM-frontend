@@ -1,0 +1,9 @@
+#add-po-btn{
+    position: fixed;
+    right: 30px;
+    background-color: #27374D;
+    bottom: 40px;
+}
+.po{
+    margin: 50px;
+}

@@ -1,7 +1,27 @@
 .right-container {
     margin-left: 240px;
 }
-
+#progress-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+@media screen and (max-width: 500px){
+    .right-container {
+      margin-left: 0px;
+    }
+    .css-ogsvnn{
+        width: 90% !important;
+      }
+      .css-4tg484 {
+        margin-left: 20px !important;
+      }
+      .css-89lq7q{
+        margin-right: 20px !important;
+      }
+  }
 .css-1v5u2yv{
     padding: 0 !important;
   }
+ 

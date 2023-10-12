@@ -1,0 +1,35 @@
+#invoice-head{
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .approved-invoice{
+    margin-top: 40px;
+  }
+
+  .invoice-table .not-present #not-present-box{
+    height: 20vh !important;
+  }
+
+  .approved-invoice .not-present #not-present-box{
+    height: 20vh !important;
+  }
+
+  .invoice-table .not-present #not-present-typo{
+    font-size: 27px;
+  }
+  .approved-invoice .not-present #not-present-typo{
+    font-size: 27px;
+  }
+  .contractor-invoices{
+    margin: 50px;
+  }
+
+  .invoice-table #progress-box{
+    height: 40vh;
+  }
+  .approved-invoice #progress-box{
+    height: 40vh;
+  }
+  #eye{
+    cursor: pointer;
+  }

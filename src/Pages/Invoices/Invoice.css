@@ -1,0 +1,66 @@
+#invoice-heading{
+    text-align: center;
+    width: 800px;
+}
+
+#name{
+    padding-left: 20px;
+}
+
+#label{
+    font-weight: 700;
+}
+.create-invoice input{
+    height: 20px;
+    padding-left: 3px;
+    border: 0.5px solid grey;
+    width:150px
+}
+#progress-box-invoice{
+    display: flex;
+    align-items: center;
+
+    justify-content: center;
+}
+
+.custom-select {
+    /* min-width: 350px; */
+  }
+  
+  .custom-select {
+    appearance: none;
+    /* safari */
+    -webkit-appearance: none;
+    /* other styles for aesthetics */
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 0.675em 6em 0.675em 1em;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 0.25rem;
+    color: #000;
+    cursor: pointer;
+  }
+  #period-div select{
+    width: 170px;
+    padding: 0.675em 1em 0.675em 1em;
+  }
+  #select-month{
+    margin-right: 20px;
+  }
+  #period-div {
+    margin-bottom: 20px;
+  }
+.create-invoice{
+    padding: 20px;
+}
+#outlined-basic{
+    width: 340px;
+    padding-left: 11px;
+}
+#create-invoice-box{
+    margin-bottom: 20px;
+}
+#create-invoice-title{
+    padding-left: 0;
+}
