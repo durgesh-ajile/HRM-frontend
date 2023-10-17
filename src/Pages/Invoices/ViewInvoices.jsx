@@ -3,22 +3,22 @@ import Box from "@mui/material/Box";
 import { Button, DialogActions, DialogTitle } from "@mui/material";
 import axios from "axios";
 import Loading from "../../Component/common/Loading";
-import { useRef } from 'react';
-import generatePDF from 'react-to-pdf';
+import { useRef } from "react";
+import generatePDF from "react-to-pdf";
 
 const commonStyles = {
-    bgcolor: "background.paper",
-    ml: 1,
-    mt: 1,
-    border: 1,
-    width: "100%",
-    height: "1.7rem",
-  };
+  bgcolor: "background.paper",
+  ml: 0,
+  mt: 1,
+  border: 1,
+  width: "100%",
+  height: "1.7rem",
+};
 
 const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
-    const targetRef = useRef();
-    const [invoiceData, setInvoiceData] = useState('')
-    const [error, setError] = useState(false);
+  const targetRef = useRef();
+  const [invoiceData, setInvoiceData] = useState("");
+  const [error, setError] = useState(false);
 
   const getInvoiceofContractor = () => {
     axios({
@@ -30,7 +30,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
     })
       .then((res) => {
         console.log(res);
-        setInvoiceData(res.data)
+        setInvoiceData(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -39,13 +39,13 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
   };
 
   useEffect(() => {
-    getInvoiceofContractor()
-  }, [])
-  
-  return ( invoiceData ?
+    getInvoiceofContractor();
+  }, []);
+
+  return invoiceData ? (
     <div className="create-invoice">
-    <DialogTitle>View Invoice</DialogTitle>
-    <Box ref={targetRef}>
+      <DialogTitle>View Invoice</DialogTitle>
+      <Box ref={targetRef}>
         <Box
           sx={{
             ...commonStyles,
@@ -54,20 +54,17 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             typography: "INVOICE/BILL OF SUPPLY",
           }}
         >
-        <Box
-              sx={{
-                width: 500,
-              }}
-            ><h5 id="invoice-heading">INVOICE/BILL OF SUPPLY</h5></Box>
+          <Box>
+            <h5 id="invoice-heading">INVOICE/BILL OF SUPPLY</h5>
+          </Box>
         </Box>
         <Box sx={{ display: "flex" }}>
-          <Box>
+          <Box sx={{ width: "60%" }}>
             <Box
               sx={{
-                width: 500,
                 height: 24,
                 border: 1,
-                ml: 1,
+                ml: 0,
                 pl: 1,
               }}
             >
@@ -76,282 +73,514 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             </Box>
             <Box
               sx={{
-                width: 500,
                 height: 24,
                 border: 1,
                 pl: 1,
-                ml: 1,
+                ml: 0,
               }}
             >
               <span id="label">Address:</span>
               <span id="label">{invoiceData.singleInvoice.Address}</span>
             </Box>
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Invoice Number : </span>
+            <span id="label-normal">
+              {invoiceData.singleInvoice.InvoiceNumber}
+            </span>
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Dated : </span>
+            <span id="label-normal"></span>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <Box sx={{ width: "60%" }}>
             <Box
               sx={{
-                width: 500,
                 height: 24,
                 border: 1,
+                ml: 0,
                 pl: 1,
-                ml: 1,
-              }}
-            ></Box>
-            <Box
-              sx={{
-                width: 500,
-                height: 24,
-                border: 1,
-                pl: 1,
-                ml: 1,
               }}
             >
-              <span id="label">GSTIN/UIN:</span>
-              <span id="label">{invoiceData.singleInvoice.GSTInUIn}</span>
+              <span id="label"></span>
+              <span id="name"></span>
             </Box>
             <Box
               sx={{
-                width: 500,
                 height: 24,
                 border: 1,
                 pl: 1,
-                ml: 1,
-              }}
-            ></Box>
-            <Box
-              sx={{
-                width: 500,
-                height: 24,
-                border: 1,
-                pl: 1,
-                ml: 1,
+                ml: 0,
               }}
             >
-              <span id="label">Buyer (Bill to)</span>
+              <span id="label">GSTIN/UIN: </span>
+              <span id="label"></span>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Delivery Note : </span>
+            <span id="label-normal"></span>
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Mode/Terms of Payment : </span>
+            <span id="label-normal"></span>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <Box sx={{ width: "60%" }}>
+            <Box
+              sx={{
+                height: 24,
+                border: 1,
+                ml: 0,
+                pl: 1,
+              }}
+            >
+              <span id="label"></span>
+              <span id="name"></span>
             </Box>
             <Box
               sx={{
-                width: 500,
                 height: 24,
                 border: 1,
-                ml: 1,
+                pl: 1,
+                ml: 0,
+              }}
+            >
+              <span id="label">Buyer (Bill to):</span>
+              <span id="label"></span>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Reference No. & Date. : </span>
+            <span id="label-normal"></span>
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Other References : </span>
+            <span id="label-normal"></span>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <Box sx={{ width: "60%" }}>
+            <Box
+              sx={{
+                height: 24,
+                border: 1,
+                ml: 0,
                 pl: 1,
               }}
             >
               <span id="label">Name:</span>
-              <span id="name">Buyer name</span>
+              <span id="name"></span>
             </Box>
             <Box
               sx={{
-                width: 500,
                 height: 24,
                 border: 1,
                 pl: 1,
-                ml: 1,
+                ml: 0,
               }}
             >
               <span id="label">Address:</span>
+              <span id="label"></span>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Buyer's Order No. : </span>
+            <span id="label-normal"></span>
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Dated : </span>
+            <span id="label-normal"></span>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <Box sx={{ width: "60%" }}>
+            <Box
+              sx={{
+                height: 24,
+                border: 1,
+                ml: 0,
+                pl: 1,
+              }}
+            >
+              <span id="label"></span>
+              <span id="name"></span>
             </Box>
             <Box
               sx={{
-                width: 500,
                 height: 24,
                 border: 1,
                 pl: 1,
-                ml: 1,
-              }}
-            ></Box>
-            <Box
-              sx={{
-                width: 500,
-                height: 24,
-                border: 1,
-                pl: 1,
-                ml: 1,
+                ml: 0,
               }}
             >
-              <span id="label">GSTIN/UIN:</span>
-              {/* <span>{gst}</span> */}
-            </Box>
-            <Box
-              sx={{
-                width: 500,
-                height: 142,
-                border: 1,
-                pl: 1,
-                ml: 1,
-              }}
-            >
-              <span id=""></span>
+              <span id="label">GSTIN/UIN: :</span>
+              <span id="label"></span>
             </Box>
           </Box>
-          <Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-            <span id="label-normal">Invoice Number : </span>
-              <span id="label-normal">{invoiceData.singleInvoice.InvoiceNumber}</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Delivery Note</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Reference No. & Date.</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Buyer's Order No.</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Dispatch Doc No.</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Dispatched through</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Bill of Lading/LR-RR No.</span>
-            </Box>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Dispatch Doc No. : </span>
+            <span id="label-normal"></span>
           </Box>
-          <Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Dated</span>
+          <Box
+            sx={{
+              width: "40%",
+              height: 48,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label-normal">Delivery Note Date : </span>
+            <span id="label-normal"></span>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <Box
+            sx={{
+              width: "59.4%",
+              height: 144,
+              border: 1,
+              pl: 1,
+              ml: 0,
+            }}
+          >
+            <span id="label"></span>
+            <span id="label"></span>
+          </Box>
+          <Box sx={{ width: "80%" }}>
+            <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  width: "50%",
+                  height: 48,
+                  border: 1,
+                  pl: 1,
+                  ml: 0,
+                }}
+              >
+                <span id="label-normal">Dispatched through : </span>
+                <span id="label-normal"></span>
+              </Box>
+              <Box
+                sx={{
+                  height: 48,
+                  border: 1,
+                  pl: 1,
+                  ml: 0,
+                  width: "50%",
+                }}
+              >
+                <span id="label-normal">Destination : </span>
+                <span id="label-normal"></span>
+              </Box>
             </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Mode/Terms of Payment</span>
+            <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  // width: "40%",
+                  height: 48,
+                  border: 1,
+                  pl: 1,
+                  ml: 0,
+                  width: "50%",
+                }}
+              >
+                <span id="label-normal">Bill of Lading/LR-RR No. : </span>
+                <span id="label-normal"></span>
+              </Box>
+              <Box
+                sx={{
+                  // width: "40%",
+                  height: 48,
+                  border: 1,
+                  pl: 1,
+                  ml: 0,
+                  width: "50%",
+                }}
+              >
+                <span id="label-normal">Motor Vehicle No.: </span>
+                <span id="label-normal"></span>
+              </Box>
             </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Other References</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Dated</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Delivery Note Date</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Destination</span>
-            </Box>
-            <Box
-              sx={{
-                width: 310,
-                height: 48,
-                border: 1,
-                pl: 1,
-                ml: 0,
-              }}
-            >
-              <span id="label-normal">Motor Vehicle No.</span>
+            <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  // width: "40%",
+                  height: 48,
+                  border: 1,
+                  pl: 1,
+                  ml: 0,
+                  width: "100%",
+                }}
+              >
+                <span id="label-normal">Terms of Delivery: </span>
+                <span id="label-normal"></span>
+              </Box>
+              
             </Box>
           </Box>
           
         </Box>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex" }}></Box>
+        <Box sx={{ display: "flex", width: "100%" }}>
+          <Box
+            sx={{
+              width: "7%",
+              border: 1,
+              ml: 0,
+              p: 1,
+              textAlign: "center",
+            }}
+          >
+            <span id="">Sr. No.</span>
+          </Box>
+          <Box
+            sx={{
+              width: "43%",
+              border: 1,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal">Description of Services</span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal">Rate per unit/hour</span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal">Other charges</span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal">Total Amount</span>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", width: "100%" }}>
+          <Box
+            sx={{
+              width: "7%",
+              border: 1,
+              height: 350,
+              ml: 0,
+              p: 1,
+              textAlign: "center",
+            }}
+          >
+            <span id="">1</span>
+          </Box>
+          <Box
+            sx={{
+              width: "43%",
+              border: 1,
+              height: 350,
+              p: 1,
+              ml: 0,
+            }}
+          >
+            <span id="">Description:</span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              height: 350,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal"></span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              height: 350,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal"></span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              height: 350,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal"></span>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", width: "100%" }}>
+          <Box
+            sx={{
+              width: "7%",
+              border: 1,
+              ml: 0,
+              p: 1,
+              textAlign: "center",
+            }}
+          >
+            <span id=""></span>
+          </Box>
+          <Box
+            sx={{
+              width: "43%",
+              border: 1,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal">Total</span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal"></span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal"></span>
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              border: 1,
+              p: 1,
+              ml: 0,
+              textAlign: "center",
+            }}
+          >
+            <span id="label-normal"></span>
+          </Box>
+        </Box>
+        {/* <Box sx={{ display: "flex", width:"100%" }}>
           <Box>
             <Box
               sx={{
                 width: 70,
                 height: 48,
                 border: 1,
-                ml: 1,
+                ml: 0,
                 p: 1,
                 textAlign: "center",
               }}
@@ -364,7 +593,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
                 height: 300,
                 border: 1,
                 p: 1,
-                ml: 1,
+                ml: 0,
                 textAlign: "center",
               }}
             >
@@ -375,18 +604,18 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
                 width: 70,
                 height: 48,
                 border: 1,
-                ml: 1,
+                ml: 0,
                 p: 1,
                 textAlign: "center",
               }}
             >
-              <span id="">Sr. No.</span>
+              <span id=""></span>
             </Box>
           </Box>
           <Box>
             <Box
               sx={{
-                width: 450,
+                width: 550,
                 height: 48,
                 border: 1,
                 p: 1,
@@ -398,7 +627,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             </Box>
             <Box
               sx={{
-                width: 450,
+                width: 550,
                 height: 300,
                 border: 1,
                 p: 1,
@@ -410,7 +639,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             </Box>
             <Box
               sx={{
-                width: 450,
+                width: 550,
                 height: 48,
                 border: 1,
                 p: 1,
@@ -424,7 +653,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
           <Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 48,
                 border: 1,
                 p: 1,
@@ -436,7 +665,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             </Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 300,
                 border: 1,
                 p: 1,
@@ -448,7 +677,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             </Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 48,
                 border: 1,
                 p: 1,
@@ -462,7 +691,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
           <Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 48,
                 border: 1,
                 p: 1,
@@ -474,7 +703,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             </Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 300,
                 border: 1,
                 p: 1,
@@ -486,7 +715,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             </Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 48,
                 border: 1,
                 p: 1,
@@ -500,7 +729,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
           <Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 48,
                 border: 1,
                 p: 1,
@@ -512,7 +741,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
             </Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 300,
                 border: 1,
                 p: 1,
@@ -520,11 +749,11 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
                 textAlign: "center",
               }}
             >
-                             <span id="label-normal">{invoiceData.singleInvoice.Amount}</span>
+              <span id="label-normal">{invoiceData.singleInvoice.Amount}</span>
             </Box>
             <Box
               sx={{
-                width: 200,
+                width: 230,
                 height: 48,
                 border: 1,
                 p: 1,
@@ -535,14 +764,13 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
               <span id="label-normal"></span>
             </Box>
           </Box>
-        </Box>
+        </Box> */}
         <Box
           sx={{
             width: "100%",
-            height: 48,
             border: 1,
             p: 1,
-            ml: 1,
+            ml: 0,
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -558,6 +786,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
         <Box
           sx={{
             display: "flex",
+            width: "100%",
           }}
         >
           <Box
@@ -566,7 +795,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
               height: 150,
               border: 1,
               p: 1,
-              ml: 1,
+              ml: 0,
             }}
           >
             <p id="label">Description:</p>
@@ -589,6 +818,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
         <Box
           sx={{
             display: "flex",
+            width: "100%",
           }}
         >
           <Box
@@ -597,7 +827,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
               height: 100,
               border: 1,
               p: 1,
-              ml: 1,
+              ml: 0,
             }}
           >
             <p id="label">Customer's Seal and Signature</p>
@@ -617,14 +847,19 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
           </Box>
         </Box>
       </Box>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={()=>{
-            generatePDF(targetRef, {filename: 'invoice.pdf'})
-          }}>Download</Button>
-        </DialogActions>
-
-    </div> : <Loading error={error} />
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button
+          onClick={() => {
+            generatePDF(targetRef, { filename: "invoice.pdf" });
+          }}
+        >
+          Download
+        </Button>
+      </DialogActions>
+    </div>
+  ) : (
+    <Loading error={error} />
   );
 };
 
