@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import { Button, DialogActions, DialogTitle, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { showToast } from "../../redux/errorSlice/errorSlice";
 
 const commonStyles = {
   bgcolor: "background.paper",
@@ -13,7 +15,7 @@ const commonStyles = {
   height: "1.7rem",
 };
 
-const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row }) => {
+const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row, loading, setLoading, allInvoices, validTill, setOpen4 }) => {
   const {id} = useParams()
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -23,6 +25,8 @@ const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row }) => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [deductedAmount, setdeductedAmount] = useState(0);
+
+  const dispatch = useDispatch();
 
   function generateRandomNumberUsingTime() {
     // Get the current date and time
@@ -46,6 +50,9 @@ const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row }) => {
   }
 
   const createInvoiceofpo = () => {
+    if(allInvoices?.remainingAmount < deductedAmount){
+      setOpen4(true)
+    } else {
     axios({
       method: "post",
       url: `http://localhost:5000/api/createInvoiceofpo`,
@@ -64,10 +71,14 @@ const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row }) => {
     })
       .then((res) => {
         console.log(res);
+        setLoading(!loading)
+        dispatch(showToast({ type: "success", message: res.data.message}));
       })
       .catch((err) => {
         console.log(err);
+        dispatch(showToast({ type: "error", message: err.response.data.message}));
       });
+    }
   };
 
   const handleGetTask = () => {
@@ -102,7 +113,7 @@ const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row }) => {
 
   useEffect(() => {
     setName(row.id.first_name + ' ' + row.id.last_name)
-    setAddress(row.id.profileId.Address)
+    setAddress(row.id.profileId?.Address)
   }, []);
 
   const convertMonth = () => {
@@ -117,20 +128,32 @@ const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row }) => {
 
   const getDeductedAmount = (arr) => {
     if (arr) {
-      let amount = (arr.length * row.amount) / 22;
+      let amount = (arr.length * row.amount) / row.businessDays;
       amount = Math.floor(amount);
       return amount;
     }
   };
 
-  console.log(row);
-  console.log(usertoken);
+  const convertDate = (date) => {
+    const dateObject = new Date(date);
+    const year = dateObject.getUTCFullYear();
+    const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+      dateObject
+    );
+    const day = dateObject.getUTCDate();
+
+    const dateTimeString = `${day} ${month} ${year}`;
+    return dateTimeString;
+  };
 
 
   return (
     <div className="create-invoice">
       <DialogTitle id="create-invoice-title">Create Invoice</DialogTitle>
       <Box>
+      <Typography variant="">Remaining amount under PO: {allInvoices?.remainingAmount}</Typography><br/>
+      <Typography variant="">PO is valid till: {convertDate(validTill)}</Typography>
+
         <Box id="create-invoice-box">
           <TextField
             id="outlined-basic"

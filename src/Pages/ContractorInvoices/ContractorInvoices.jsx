@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import "./ContractorInvoices.css";
 import Loading from "../../Component/common/Loading";
 import { Typography } from "@mui/material";
@@ -22,6 +22,9 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import ViewInvoiceContractor from "./ViewInvoiceContractor";
+import Paginations from "../../Component/common/Pagination";
+import { useDispatch } from "react-redux";
+import { showToast } from "../../redux/errorSlice/errorSlice";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -61,6 +64,13 @@ const ContractorInvoices = () => {
   const { invoiceid } = useParams();
   const { usertoken } = JSON.parse(localStorage.getItem("token"));
 
+  const [searchParams] = useSearchParams();
+  let page = searchParams.get("page");
+  let page2 = searchParams.get("page2");
+
+  const dispatch = useDispatch();
+
+  // console.log(page2)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -82,7 +92,7 @@ const ContractorInvoices = () => {
   const getApprovedInvoices = () =>
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getapprovedinvoicedforadmin?contractorId=${invoiceid}`,
+      url: `http://localhost:5000/api/getapprovedinvoicedforadmin?contractorId=${invoiceid}&page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -104,7 +114,7 @@ const ContractorInvoices = () => {
   const getPendingInvoices = () =>
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getpendinginvoiceforadmin?contractorId=${invoiceid}`,
+      url: `http://localhost:5000/api/getpendinginvoiceforadmin?contractorId=${invoiceid}&page=${page2}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -136,16 +146,25 @@ const ContractorInvoices = () => {
     })
       .then((res) => {
         setLoading(!loading);
-        console.log(res);
+        dispatch(showToast({ type: "success", message: res.data.message}));
       })
       .catch((err) => {
         console.log(err);
+        dispatch(showToast({ type: "error", message: err.response.data.message}));
       });
 
   useEffect(() => {
     getApprovedInvoices();
     getPendingInvoices();
   }, [loading]);
+
+  useEffect(() => {
+    getApprovedInvoices();
+  }, [page]);
+
+  useEffect(() => {
+    getPendingInvoices();
+  }, [page2]);
 
   function getMonthAndYearFromDate(dateString) {
     const date = new Date(dateString);
@@ -154,7 +173,7 @@ const ContractorInvoices = () => {
     return `${month} ${year}`;
   }
 
-  console.log(approvedData);
+  // console.log(approvedData);
 
   return (
     <div className="contractor-invoices">
@@ -163,58 +182,63 @@ const ContractorInvoices = () => {
           Pending Invoices
         </Typography>
         {pendingData ? (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Sr. No</StyledTableCell>
-                  <StyledTableCell align="right">Client Name</StyledTableCell>
-                  <StyledTableCell align="right">Invoice Date</StyledTableCell>
-                  <StyledTableCell align="right">Amount</StyledTableCell>
-                  <StyledTableCell align="center">
-                    View Screenshot
-                  </StyledTableCell>
-                  <StyledTableCell align="center"></StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {pendingData.ApprovedInvoice.map((row, index) => (
-                  <StyledTableRow key={row._id}>
-                    <StyledTableCell component="th" scope="row">
-                      {index + 1}
-                    </StyledTableCell>
-                    <StyledTableCell align="right" component="th" scope="row">
-                      {row.clientId.clientName}
-                    </StyledTableCell>
+          <div>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Sr. No</StyledTableCell>
+                    <StyledTableCell align="right">Client Name</StyledTableCell>
                     <StyledTableCell align="right">
-                      {getMonthAndYearFromDate(row.InvoiceMonth)}
+                      Invoice Date
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.amount}
+                    <StyledTableCell align="right">Amount</StyledTableCell>
+                    <StyledTableCell align="center">
+                      View Screenshot
                     </StyledTableCell>
-                    <StyledTableCell
-                      align="center"
-                      id="eye"
-                      onClick={() => {
-                        setImageLink(row.ApprovalScreenshot);
-                        handleClickOpen();
-                      }}
-                    >
-                      <BsFillEyeFill />
-                    </StyledTableCell>
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        handleApproveInvoice(row._id);
-                      }}
-                    >
-                      Approve
-                    </Button>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                    <StyledTableCell align="center"></StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {pendingData.ApprovedInvoice.map((row, index) => (
+                    <StyledTableRow key={row._id}>
+                      <StyledTableCell component="th" scope="row">
+                        {index + 1}
+                      </StyledTableCell>
+                      <StyledTableCell align="right" component="th" scope="row">
+                        {row.clientId.clientName}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {getMonthAndYearFromDate(row.InvoiceMonth)}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {row.amount}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="center"
+                        id="eye"
+                        onClick={() => {
+                          setImageLink(row.ApprovalScreenshot);
+                          handleClickOpen();
+                        }}
+                      >
+                        <BsFillEyeFill />
+                      </StyledTableCell>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          handleApproveInvoice(row._id);
+                        }}
+                      >
+                        Approve
+                      </Button>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Paginations totalPages={pendingData.totalPage} page2={true} />
+          </div>
         ) : (
           <Loading query="pending invoice" error={pendingError} />
         )}
@@ -225,60 +249,69 @@ const ContractorInvoices = () => {
           Approved Invoices
         </Typography>
         {approvedData ? (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Sr. No</StyledTableCell>
-                  <StyledTableCell align="right">Client Name</StyledTableCell>
-                  <StyledTableCell align="right">Invoice Date</StyledTableCell>
-                  <StyledTableCell align="right">Amount</StyledTableCell>
-                  <StyledTableCell align="center">
-                    View Screenshot
-                  </StyledTableCell>
-                  <StyledTableCell align="center">View Invoice</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {approvedData.ApprovedInvoice.map((row, index) => (
-                  <StyledTableRow key={row._id}>
-                    <StyledTableCell component="th" scope="row">
-                      {index + 1}
-                    </StyledTableCell>
-                    <StyledTableCell align="right" component="th" scope="row">
-                      {row.clientId.clientName}
-                    </StyledTableCell>
+          <div>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Sr. No</StyledTableCell>
+                    <StyledTableCell align="right">Client Name</StyledTableCell>
                     <StyledTableCell align="right">
-                      {getMonthAndYearFromDate(row.InvoiceMonth)}
+                      Invoice Date
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.amount}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      align="center"
-                      id="eye"
-                      onClick={() => {
-                        setImageLink(row.ApprovalScreenshot);
-                        handleClickOpen();
-                      }}
-                    >
-                      <BsFillEyeFill />
+                    <StyledTableCell align="right">Amount</StyledTableCell>
+                    <StyledTableCell align="center">
+                      View Screenshot
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      <Button variant="outlined" onClick={handleClickOpen3}>View Invoice</Button>
+                      View Invoice
                     </StyledTableCell>
-                    <Dialog fullScreen open={open3} onClose={handleClose3}>
-                      <ViewInvoiceContractor
-                        invoiceId={row._id}
-                        usertoken={usertoken}
-                        handleClose={handleClose3}
-                      />
-                    </Dialog>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {approvedData.ApprovedInvoice.map((row, index) => (
+                    <StyledTableRow key={row._id}>
+                      <StyledTableCell component="th" scope="row">
+                        {index + 1}
+                      </StyledTableCell>
+                      <StyledTableCell align="right" component="th" scope="row">
+                        {row.clientId.clientName}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {getMonthAndYearFromDate(row.InvoiceMonth)}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {row.amount}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="center"
+                        id="eye"
+                        onClick={() => {
+                          setImageLink(row.ApprovalScreenshot);
+                          handleClickOpen();
+                        }}
+                      >
+                        <BsFillEyeFill />
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button variant="outlined" onClick={handleClickOpen3}>
+                          View Invoice
+                        </Button>
+                      </StyledTableCell>
+                      <Dialog fullScreen open={open3} onClose={handleClose3}>
+                        <ViewInvoiceContractor
+                          invoiceId={row._id}
+                          usertoken={usertoken}
+                          handleClose={handleClose3}
+                        />
+                      </Dialog>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Paginations totalPages={approvedData.totalPage} />
+          </div>
         ) : (
           <Loading query="approved invoice" error={approvedError} />
         )}

@@ -15,7 +15,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
 import IconButton from "@mui/material/IconButton";
@@ -26,6 +26,9 @@ import TextField from "@mui/material/TextField";
 import Textarea from "@mui/joy/Textarea";
 import CircularProgress from "@mui/material/CircularProgress";
 import Loading from "../../Component/common/Loading";
+import Paginations from "../../Component/common/Pagination";
+import { showToast } from "../../redux/errorSlice/errorSlice";
+import { useDispatch } from "react-redux";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -60,6 +63,10 @@ const SingleOrg = () => {
   const { usertoken } = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
+  let page = searchParams.get("page");
+
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -75,6 +82,8 @@ const SingleOrg = () => {
   const handleClose2 = () => {
     setOpen2(false);
   };
+
+  const dispatch = useDispatch();
 
   const convertDate2 = (date) => {
     var newdate = new Date(date);
@@ -101,11 +110,12 @@ const SingleOrg = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         setLoading(!loading);
+        dispatch(showToast({ type: "success", message: res.data.message}));
       })
       .catch((err) => {
         console.log(err);
+        dispatch(showToast({ type: "error", message: err.response.data.message}));
       });
 
   const getAllPos = () =>
@@ -342,7 +352,7 @@ const SingleOrg = () => {
                     <Button
                       variant="contained"
                       onClick={() => {
-                        navigate(`/organization/${id}/${row._id}`);
+                        navigate(`/organization/${id}/${row._id}?page=1`);
                       }}
                     >
                       More Details
@@ -561,6 +571,7 @@ const SingleOrg = () => {
             )}
           </Table>
         </TableContainer>
+        <Paginations totalPages={allPo.totalPages} />
       </div> : <Loading error ={error} query ="PO"/>}
     </div>
   )

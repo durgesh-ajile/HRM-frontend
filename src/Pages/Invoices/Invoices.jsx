@@ -17,11 +17,12 @@ import Loading from "../../Component/common/Loading";
 import { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Button, Dialog } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import "./Invoice.css";
 import CreateInvoice from "./CreateInvoice";
 import ViewInvoice from "./ViewInvoices";
 import { Alert, AlertTitle, CircularProgress } from "@mui/material";
+import { useDispatch } from "react-redux";
 
 Row.propTypes = {
   row: PropTypes.shape({
@@ -45,6 +46,7 @@ const Invoices = () => {
   const [poData, setPoData] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [allInvoices, setAllInvoices] = useState('');
 
   const { poid } = useParams();
   const { usertoken } = JSON.parse(localStorage.getItem("token"));
@@ -66,9 +68,26 @@ const Invoices = () => {
       });
   };
 
+  const getInvoiceDataForRestriction = () => {
+    axios({
+      method: "get",
+      url: `http://localhost:5000/api/getinvoicedata?poId=${poid}`,
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+    })
+      .then((res) => {
+        setAllInvoices(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   React.useEffect(() => {
     getSinglePo();
+    getInvoiceDataForRestriction()
   }, [loading]);
 
   return poData ? (
@@ -95,6 +114,10 @@ const Invoices = () => {
                 index={index}
                 poid={poid}
                 usertoken={usertoken}
+                allInvoices={allInvoices}
+                validTill={poData.ValidTill}
+                parentLoading={loading}
+                setParentLoading={setLoading}
               />
             ))}
           </TableBody>
@@ -107,10 +130,11 @@ const Invoices = () => {
 };
 
 function Row(props) {
-  const { row, index, poid, usertoken } = props;
+  const { row, index, poid, usertoken, allInvoices, validTill, parentLoading, setParentLoading } = props;
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("");
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [open2, setOpen2] = React.useState(false);
 
@@ -132,6 +156,16 @@ function Row(props) {
     setOpen3(false);
   };
 
+  const [open4, setOpen4] = React.useState(false);
+
+  const handleClickOpen4 = () => {
+    setOpen4(true);
+  };
+
+  const handleClose4 = () => {
+    setOpen4(false);
+  };
+
   const getInvoiceData = () => {
     axios({
       method: "get",
@@ -149,6 +183,10 @@ function Row(props) {
       });
   };
 
+  React.useEffect(()=>{
+    setParentLoading(!parentLoading)
+    getInvoiceData();
+  }, [loading])
 
 
   return (
@@ -160,7 +198,6 @@ function Row(props) {
             size="small"
             onClick={() => {
               setOpen(!open);
-              getInvoiceData();
             }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -188,6 +225,11 @@ function Row(props) {
               usertoken={usertoken}
               handleClose={handleClose2}
               row={row}
+              loading={loading}
+              setLoading={setLoading}
+              allInvoices={allInvoices}
+              validTill={validTill}
+              setOpen4={setOpen4}
             />
           </Dialog>
         </TableCell>
@@ -255,6 +297,26 @@ function Row(props) {
           </Collapse>
         </TableCell>
       </TableRow>
+      <Dialog
+        open={open4}
+        onClose={handleClose4}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"PO amount reached."}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+           New invoice cannot be created because doing this cross the total amount in invoices to the total PO amount given
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose4} autoFocus>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }

@@ -27,7 +27,7 @@ const AdminContractorTab = () => {
 
   const handleChangeSerch = (e) => {
     setSearchQuery(e.target.value);
-    e.target.value.length === 0 && dispatch(asyncThunkGetContractor(1));
+    e.target.value.length === 0 && dispatch(asyncThunkGetContractor(pageIndicator));
     setisSearch(false);
   };
 
@@ -87,7 +87,7 @@ const AdminContractorTab = () => {
 
   return (
     <Box sx={{ backgroundColor: "#00000006" }}>
-      <New />
+      <New totalPages={totalPages} />
       {/* <SearchBar page={page} /> */}
       <div className="client-search-form">
         <div className="form-row">

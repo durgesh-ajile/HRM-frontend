@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import "./PoDetails.css";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect, useState } from "react";
@@ -21,6 +21,9 @@ import { AiFillDelete } from "react-icons/ai";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import Loading from "../../Component/common/Loading";
+import Paginations from "../../Component/common/Pagination";
+import { useDispatch } from "react-redux";
+import { showToast } from "../../redux/errorSlice/errorSlice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -43,6 +46,12 @@ const PoDetail = () => {
   const [error, setError] = useState(false);
   const [addContractorId, setAddContractorId] = useState("");
   const [amount, setAmount] = useState(0);
+  const [workingDays, setWorkingDays] = useState("");
+
+  const [searchParams] = useSearchParams();
+  let page = searchParams.get("page");
+
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -90,7 +99,7 @@ const PoDetail = () => {
   const getContractor = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getContractor?page=2`,
+      url: `http://localhost:5000/api/getContractor?page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -114,9 +123,11 @@ const PoDetail = () => {
       .then((res) => {
         console.log(res);
         setLoading(!loading);
+        dispatch(showToast({ type: "success", message: res.data.message}));
       })
       .catch((err) => {
         console.log(err);
+        dispatch(showToast({ type: "error", message: err.response.data.message}));
       });
   };
 
@@ -130,15 +141,17 @@ const PoDetail = () => {
       data: {
         contractorId: addContractorId,
         poId: poid,
-        contractorAmount: amount
+        contractorAmount: amount,
+        businessDays: workingDays
       },
     })
       .then((res) => {
-        console.log(res);
         setLoading(!loading);
+        dispatch(showToast({ type: "success", message: res.data.message}));
       })
       .catch((err) => {
         console.log(err);
+        dispatch(showToast({ type: "error", message: err.response.data.message}));
       });
   };
 
@@ -147,9 +160,12 @@ const PoDetail = () => {
     getContractor();
   }, [loading]);
 
-  console.log(poData);
+  useEffect(() => {
+    getContractor();
+  }, [page]);
+
+  console.log(contractor);
   // console.log(removeContractor);
-  
 
   const convertDate = (date) => {
     const dateObject = new Date(date);
@@ -428,6 +444,7 @@ const PoDetail = () => {
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Amount</TableCell>
+                <TableCell align="center">Working Days</TableCell>
                 <TableCell align="center">Remove</TableCell>
               </TableRow>
             </TableHead>
@@ -445,6 +462,7 @@ const PoDetail = () => {
                   </TableCell>
                   <TableCell align="center">{row.id.email}</TableCell>
                   <TableCell align="center">{row.amount}</TableCell>
+                  <TableCell align="center">{row.businessDays}</TableCell>
                   <TableCell
                     align="center"
                     sx={{
@@ -491,33 +509,55 @@ const PoDetail = () => {
           </Table>
         </TableContainer>
         <Dialog open={open3} onClose={handleClose3}>
-                  <DialogTitle>Amount</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      Enter the amount of invoice for selected contractor
-                    </DialogContentText>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="Amount"
-                      type="number"
-                      fullWidth
-                      variant="standard"
-                      amount={amount}
-                      onChange={(e)=>{
-                        setAmount(e.target.value)
-                      }}
-                    />
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose3}>Cancel</Button>
-                    <Button onClick={()=>{
-                      handleClose3()
-                      handleAddContractor()
-                    }}>Submit</Button>
-                  </DialogActions>
-                </Dialog>
+          <DialogTitle>Amount and working days</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Enter the amount of invoice for selected contractor
+            </DialogContentText>
+            <TextField
+              sx={{ mt: "0px" }}
+              autoFocus
+              margin="dense"
+              id="amount"
+              label="Amount"
+              type="number"
+              fullWidth
+              variant="standard"
+              amount={amount}
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}
+            />
+            <DialogContentText sx={{ mt: "30px" }}>
+              Enter total working days in a month for the selected contractor
+            </DialogContentText>
+            <TextField
+              sx={{ mt: "0px" }}
+              autoFocus
+              margin="dense"
+              id="amount"
+              label="Working days"
+              type="number"
+              fullWidth
+              variant="standard"
+              amount={workingDays}
+              onChange={(e) => {
+                setWorkingDays(e.target.value);
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose3}>Cancel</Button>
+            <Button
+              onClick={() => {
+                handleClose3();
+                handleAddContractor();
+              }}
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
         <BootstrapDialog
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
@@ -550,17 +590,20 @@ const PoDetail = () => {
             >
               Contractors
             </DialogTitle>
-            <TableContainer sx={{ border: "1px solid gray" }} component={Paper}>
-              <Table aria-label="caption table">
-                <TableHead id="all-orgzn-head">
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {contractor &&
-                    contractor.data.map((row) => {
+            {contractor && (
+              <TableContainer
+                sx={{ border: "1px solid gray" }}
+                component={Paper}
+              >
+                <Table aria-label="caption table">
+                  <TableHead id="all-orgzn-head">
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell align="center">Email</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {contractor.data.map((row) => {
                       return (
                         <TableRow
                           sx={{
@@ -569,8 +612,8 @@ const PoDetail = () => {
                           key=""
                           onClick={() => {
                             setAddContractorId(row._id);
-                            setOpen(false)
-                            handleClickOpen3()
+                            setOpen(false);
+                            handleClickOpen3();
                           }}
                         >
                           <TableCell
@@ -597,9 +640,11 @@ const PoDetail = () => {
                         </TableRow>
                       );
                     })}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+            <Paginations totalPages={contractor.totalPages} />
           </Box>
 
           <DialogActions>

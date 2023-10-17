@@ -5,9 +5,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
+import { showToast } from "../../redux/errorSlice/errorSlice";
+import { useDispatch } from "react-redux";
 
 
-const OrganizationTable = ({tableData, setLoading, profileId}) => {
+const OrganizationTable = ({tableData, setLoading, profileId, loading}) => {
     const [open, setOpen] = useState(false);
 
     const [deleteOrgId, setDeleteOrgId] = useState('')
@@ -15,6 +17,8 @@ const OrganizationTable = ({tableData, setLoading, profileId}) => {
         setOpen(true);
       };
     
+      const dispatch = useDispatch();
+
       const handleClose = () => {
         setOpen(false);
       };
@@ -29,11 +33,12 @@ const OrganizationTable = ({tableData, setLoading, profileId}) => {
       }
     })
       .then((res) => {
-        // setLoading(!loading)
-        console.log(res);
+        setLoading(!loading)
+        dispatch(showToast({ type: "success", message: res.data.message}));
       })
       .catch((err) => {
         console.log(err);
+        dispatch(showToast({ type: "error", message: err.response.data.message}));
       });
 
   return ( tableData.length !== 0 ?
@@ -49,6 +54,7 @@ const OrganizationTable = ({tableData, setLoading, profileId}) => {
               <TableCell align="center">Sr No.</TableCell>
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Amount</TableCell>
+                <TableCell align="center">Working Days</TableCell>
                 <TableCell align="center">Remove</TableCell>
               </TableRow>
             </TableHead>
@@ -88,6 +94,15 @@ const OrganizationTable = ({tableData, setLoading, profileId}) => {
                     }}
                   >
                     {row.amount}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      fontSize: "15px",
+                      fontWeight: "700"
+                    }}
+                  >
+                    {row.businessDays}
                   </TableCell>
                   <TableCell
                     align="center"

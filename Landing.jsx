@@ -9,6 +9,7 @@ import SingleOrg from "./src/Pages/SingleOrganization.jsx/SingleOrg";
 import PoDetail from "./src/Pages/PoDetails/PoDetail";
 import Invoices from "./src/Pages/Invoices/Invoices";
 import ContractorInvoices from "./src/Pages/ContractorInvoices/ContractorInvoices";
+import OurOrganization from "./src/Pages/OurOrganization/OurOrganization";
 
 const Landing = () => {
   return (
@@ -23,6 +24,7 @@ const Landing = () => {
           <Route path="/organization/:id/:poid" element={<PoDetail />} />
           <Route path="/organization/:id/invoices/:poid" element={<Invoices />} />
           <Route path="/invoices/:invoiceid" element={<ContractorInvoices />} />
+          <Route path="/ourorganizations" element={<OurOrganization />} />
         </Routes>
       </div>
     </div>

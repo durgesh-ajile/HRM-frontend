@@ -120,7 +120,7 @@ const ClientsCard = ({ value }) => {
               {/* eslint-disable-next-line react/prop-types */}
               {profileId?.IsApproved && (
                 <WhiteButton
-                  onClick={() => navigate(`/invoices/${_id}`)}
+                  onClick={() => navigate(`/invoices/${_id}?page=1&page2=1`)}
                   text={"Invoices"}
                 />
               )}

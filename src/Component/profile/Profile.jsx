@@ -15,6 +15,7 @@ import {
   IconButton,
   TextField,
   DialogContentText,
+  NativeSelect,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
@@ -26,7 +27,7 @@ import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 
 import Cardss from "./Cards";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { asyncThunkGetDitailsOfContractor } from "../../redux/createAsyncThunk";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +36,8 @@ import "./cards.css";
 import { showToast } from "../../redux/errorSlice/errorSlice";
 import axios from "axios";
 import OrganizationTable from "./OrganizationTable";
+import Loading from "../common/Loading";
+import Paginations from "../common/Pagination";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -56,9 +59,16 @@ export default function Profile() {
   const [open3, setOpen3] = useState(false);
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [workingDays, setWorkingDays] = useState("");
+  const [allOurOrganization, setallOurOrganization] = useState('');
+  const [selectedOrganization, setSelectedOrganization] = useState('');
+  const [error, setError] = useState(false);
 
   const theme = useTheme();
   const { usertoken } = JSON.parse(localStorage.getItem("token"));
+
+  const [searchParams] = useSearchParams();
+  let page = searchParams.get("page");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -79,16 +89,26 @@ export default function Profile() {
   const getAllOrganizations = () =>
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getallClient",
+      url: `http://localhost:5000/api/getallClient?ourOrganizationId=${selectedOrganization}&page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
     })
       .then((res) => {
         setAllClients(res.data.data);
+        // dispatch(showToast({ type: "success", message: res.data.message}));
       })
       .catch((err) => {
         console.log(err);
+        // dispatch(showToast({ type: "error", message: err.response.data.message}));
+        if (err.response.status === 404) {
+          setAllClients('')
+          setError(404);
+        } else if (err.response.status === 422) {
+          setError(422);
+        } else {
+          setError(true);
+        }
       });
 
   const handleAddOrg = () =>
@@ -102,21 +122,45 @@ export default function Profile() {
         contractorId: ContractorDataById?.profileId._id,
         clientId: addOrganizationId,
         amount: amount,
+        businessDays: workingDays
       },
     })
       .then((res) => {
         setLoading(!loading);
+        dispatch(showToast({ type: "success", message: res.data.message}));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(showToast({ type: "error", message: err.response.data.message}));
+      });
+
+      const getAllOurOrganizations = () =>
+    axios({
+      method: "get",
+      url: `http://localhost:5000/api/getownorganizationindropdown`,
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+    })
+      .then((res) => {
         console.log(res);
+        setallOurOrganization(res.data.response);
       })
       .catch((err) => {
         console.log(err);
       });
 
   useEffect(() => {
-    getAllOrganizations();
+    getAllOurOrganizations()
   }, [loading]);
 
-  console.log(ContractorDataById);
+  useEffect(()=>{
+    getAllOrganizations();
+  }, [selectedOrganization, loading])
+
+  console.log(allClients);
+  console.log(selectedOrganization);
+
   // MUI table
   function createData(name, calories) {
     return { name, calories };
@@ -151,7 +195,7 @@ export default function Profile() {
     // Combine the components into the desired format
     `${formattedDay}/${formattedMonth}/${formattedYear}`;
     setFormattedDate(`${formattedDay}/${formattedMonth}/${formattedYear}`);
-  }, [contractorId, dispatch]);
+  }, [contractorId, dispatch, loading]);
 
   return (
     <>
@@ -268,6 +312,7 @@ export default function Profile() {
           </div>
           <div className="profile-org">
             <OrganizationTable
+              loading={loading}
               setLoading={setLoading}
               tableData={ContractorDataById.profileId.SelfOrganization}
               profileId={ContractorDataById.profileId._id}
@@ -299,6 +344,7 @@ export default function Profile() {
             >
               <CloseIcon />
             </IconButton>
+            
             <Box
               sx={{
                 width: "55ch",
@@ -314,10 +360,38 @@ export default function Profile() {
               >
                 Contractors
               </DialogTitle>
+              {allOurOrganization ? (
+        <NativeSelect
+        sx={{mb:"20px"}}
+          value={selectedOrganization}
+          inputProps={{
+            name: "organization",
+            id: "uncontrolled-native",
+          }}
+          onChange={(e) => {
+            setSelectedOrganization(e.target.value);
+          }}
+        >
+          <option selected value="">
+            Select
+          </option>
+          {allOurOrganization.map((organization) => {
+            return (
+              <option value={organization._id}>{organization.LegalName}</option>
+            );
+          })}
+        </NativeSelect>
+      ) : <Typography>
+        Unable to fetch our organization data
+      </Typography>}
               <TableContainer
                 sx={{ border: "1px solid gray" }}
                 component={Paper}
               >
+
+              
+      {allClients? 
+      <Box>
                 <Table aria-label="caption table">
                   <TableHead id="all-orgzn-head">
                     <TableRow>
@@ -326,8 +400,7 @@ export default function Profile() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {allClients &&
-                      allClients.map((row) => {
+                    {allClients.map((row) => {
                         return (
                           <TableRow
                             sx={{
@@ -366,6 +439,31 @@ export default function Profile() {
                       })}
                   </TableBody>
                 </Table>
+                <Paginations totalPages={allClients.totalPages} />
+</Box>
+                 : error === 422 ? (
+        <div className="not-present">
+        <Box
+          sx={{
+            width: "100%",
+            height: "21vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            pb:"50px"
+          }}
+          id="not-present-box"
+        >
+          <Box>
+            <Typography id="not-present-typo" variant="h6">
+              Please select our organization
+            </Typography>
+          </Box>
+        </Box>
+    </div>
+      ) : (
+        <Loading error={error} query="Organization" />
+      )}
               </TableContainer>
             </Box>
 
@@ -400,6 +498,23 @@ export default function Profile() {
                 amount={amount}
                 onChange={(e) => {
                   setAmount(e.target.value);
+                }}
+              />
+              <DialogContentText sx={{ mt: "30px" }}>
+                Enter total working days in a month for the selected contractor
+              </DialogContentText>
+              <TextField
+                sx={{ mt: "0px" }}
+                autoFocus
+                margin="dense"
+                id="amount"
+                label="Working days"
+                type="number"
+                fullWidth
+                variant="standard"
+                value={workingDays}
+                onChange={(e) => {
+                  setWorkingDays(e.target.value);
                 }}
               />
             </DialogContent>

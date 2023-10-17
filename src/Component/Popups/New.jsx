@@ -6,7 +6,7 @@ import { asyncThunkAddContractor, asyncThunkGetContractor } from '../../redux/cr
 import { Button } from '@mui/material';
 
 
-function New() {
+function New({totalPages}) {
   const [showPopup, setShowPopup] = useState(false);
   const [clientDetails, setClientDetails] = useState({
     name: '',
@@ -38,7 +38,7 @@ function New() {
       "email": clientDetails.phone
     }
     dispatch(asyncThunkAddContractor(payload))
-    dispatch(asyncThunkGetContractor(1));
+    dispatch(asyncThunkGetContractor(totalPages));
     // setClients((prevClients) => [...prevClients, clientDetails]);
     // setClientDetails({
     //   name: '',

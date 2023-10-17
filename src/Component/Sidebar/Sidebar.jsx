@@ -67,7 +67,15 @@ function ResponsiveDrawer(props) {
             <ListItemIcon>
               <Person3Outlined style={location.pathname === '/organizations' ? {color:'black'} : {color:'white'}} />
             </ListItemIcon>
-            <ListItemText primary="Client-Organization" onClick={() => (navigate("/organizations"))} />
+            <ListItemText primary="Client-Organization" onClick={() => (navigate("/organizations?page=1"))} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding >
+          <ListItemButton style={location.pathname === '/ourorganizations' ? {background: 'white', color:'black'} : {background: '#34495E', color:'white'}} >
+            <ListItemIcon>
+              <Person3Outlined style={location.pathname === '/ourorganizations' ? {color:'black'} : {color:'white'}} />
+            </ListItemIcon>
+            <ListItemText primary="Our-Organization" onClick={() => (navigate("/ourorganizations?page=1"))} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding >
