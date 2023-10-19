@@ -1,10 +1,14 @@
 #invoice-heading{
     text-align: center;
-    width: 800px;
+    /* width: 800px; */
 }
 
 #name{
     padding-left: 20px;
+}
+
+#label-normal{
+  padding: 2px;
 }
 
 #label{
