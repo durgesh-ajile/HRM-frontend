@@ -92,7 +92,7 @@ const ContractorInvoices = () => {
   const getApprovedInvoices = () =>
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getapprovedinvoicedforadmin?contractorId=${invoiceid}&page=${page}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getapprovedinvoicedforadmin?contractorId=${invoiceid}&page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -114,7 +114,7 @@ const ContractorInvoices = () => {
   const getPendingInvoices = () =>
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getpendinginvoiceforadmin?contractorId=${invoiceid}&page=${page2}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getpendinginvoiceforadmin?contractorId=${invoiceid}&page=${page2}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -136,7 +136,7 @@ const ContractorInvoices = () => {
   const handleApproveInvoice = (id) =>
     axios({
       method: "patch",
-      url: `http://localhost:5000/api/approveinvoice`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/approveinvoice`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -340,7 +340,7 @@ const ContractorInvoices = () => {
             </Button>
           </Toolbar>
         </AppBar>
-        <img src={`http://localhost:5000${imgLink.split("public")[1]}`} />
+        <img src={`https://hrmsbackend.ajiledone${imgLink.split("public")[1]}`} />
       </Dialog>
     </div>
   );

@@ -82,7 +82,7 @@ const PoDetail = () => {
   const getSinglePo = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getsinglePo?poId=${poid}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getsinglePo?poId=${poid}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -99,7 +99,7 @@ const PoDetail = () => {
   const getContractor = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getContractor?page=${page}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getContractor?page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -115,7 +115,7 @@ const PoDetail = () => {
   const handleRemoveContractor = () => {
     axios({
       method: "delete",
-      url: `http://localhost:5000/api/deletecontractorfrompo?poId=${poid}&contractorId=${removeContractor}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/deletecontractorfrompo?poId=${poid}&contractorId=${removeContractor}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -134,7 +134,7 @@ const PoDetail = () => {
   const handleAddContractor = () => {
     axios({
       method: "patch",
-      url: `http://localhost:5000/api/updateContractorintopo`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/updateContractorintopo`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
