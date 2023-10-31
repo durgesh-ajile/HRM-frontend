@@ -54,7 +54,7 @@ const Invoices = () => {
   const getSinglePo = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getsinglePo?poId=${poid}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getsinglePo?poId=${poid}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -71,7 +71,7 @@ const Invoices = () => {
   const getInvoiceDataForRestriction = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getinvoicedata?poId=${poid}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getinvoicedata?poId=${poid}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -169,7 +169,7 @@ function Row(props) {
   const getInvoiceData = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getinvoiceofcontractor?poId=${poid}&contractorId=${row.id._id}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getinvoiceofcontractor?poId=${poid}&contractorId=${row.id._id}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
