@@ -53,7 +53,7 @@ const OurOrganization = () => {
   const handleOrganizationSubmit = () =>
     axios({
       method: "post",
-      url: "http://localhost:5000/api/createourownorganization",
+      url: "https://braided-complex-403612.el.r.appspot.com/api/createourownorganization",
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -75,7 +75,7 @@ const OurOrganization = () => {
   const getAllOrganizations = () =>
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getourownorgnization?page=${page}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getourownorgnization?page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },

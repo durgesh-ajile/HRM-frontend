@@ -10,6 +10,7 @@ import PoDetail from "./src/Pages/PoDetails/PoDetail";
 import Invoices from "./src/Pages/Invoices/Invoices";
 import ContractorInvoices from "./src/Pages/ContractorInvoices/ContractorInvoices";
 import OurOrganization from "./src/Pages/OurOrganization/OurOrganization";
+import  socket  from './src/Socket.jsx';
 
 const Landing = () => {
   return (
