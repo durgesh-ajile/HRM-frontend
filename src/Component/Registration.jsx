@@ -3,7 +3,7 @@ import { BsPersonCircle, BsFillFileLock2Fill } from 'react-icons/bs';
 import { AiFillLock } from 'react-icons/ai'
 import { useFormik } from "formik";
 import { validate } from '../schemas/validate'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { asyncThunkSignUp } from '../redux/createAsyncThunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -53,14 +53,15 @@ const Registration = () => {
           "password": values.password,
           "repeat_password": values.c_pass
         }
+
         dispatch(asyncThunkSignUp(payload))
-        setTimeout(() => {
-          
-          SignUpData?.isPageRedirect && navigate('/signin')
-        }, 1000);
       }
     }
   );
+
+  useEffect(()=>{
+    SignUpData.length !== 0 && navigate('/signin')
+  }, [SignUpData])
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;

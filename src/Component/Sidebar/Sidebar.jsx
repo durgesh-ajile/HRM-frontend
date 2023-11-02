@@ -18,6 +18,7 @@ import { AdminPanelSettingsSharp, AppRegistrationTwoTone, CalendarMonthOutlined,
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchLogin } from '../../redux/admin/databaseSlice';
 import { useDispatch } from 'react-redux';
+import { Typography } from '@mui/material';
 
 
 const drawerWidth = 240;
@@ -28,17 +29,19 @@ function ResponsiveDrawer(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location  = useLocation();
-  const { expiry } = JSON.parse(localStorage.getItem("token"));
+  
+  const token = JSON.parse(localStorage.getItem("token"));
+  const tokenExpiry = new Date(token.expiry);
+  token === null && dispatch(showToast({ type: "warning", message: "Token Has Expired ! Please SignIn Again", }));
 
   let currentDate = new Date();
 
   React.useEffect(() => {
-    if (!expiry || (currentDate > expiry)) {
+    if (!tokenExpiry || (currentDate > tokenExpiry)) {
       navigate("/signin");
     }
   }, []);
 
-  console.log(currentDate > expiry)
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

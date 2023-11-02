@@ -173,7 +173,7 @@ const ContractorInvoices = () => {
     return `${month} ${year}`;
   }
 
-  // console.log(approvedData);
+  console.log(approvedData);
 
   return (
     <div className="contractor-invoices">
@@ -340,7 +340,7 @@ const ContractorInvoices = () => {
             </Button>
           </Toolbar>
         </AppBar>
-        <img src={`http://localhost:5000${imgLink.split("public")[1]}`} />
+        <img src={imgLink} />
       </Dialog>
     </div>
   );

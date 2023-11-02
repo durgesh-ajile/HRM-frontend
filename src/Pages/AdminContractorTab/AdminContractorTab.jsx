@@ -69,6 +69,7 @@ const AdminContractorTab = () => {
       token = JSON.parse(localStorage.getItem("token"));
       tokenExpiry = new Date(token.expiry);
       token === null && dispatch(showToast({ type: "warning", message: "Token Has Expired ! Please SignIn Again", }));
+
     } catch (error) {
       dispatch(showToast({ type: "warning", message: "Token Has Expired ! Please SignIn Again", }));
     }
@@ -77,7 +78,6 @@ const AdminContractorTab = () => {
       localStorage.removeItem("token");
       navigate("/signin");
     }
-
     setContractorData(data);
   }, [data, dispatch, navigate]);
 

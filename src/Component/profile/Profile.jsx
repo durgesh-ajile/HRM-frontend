@@ -32,7 +32,7 @@ import { useEffect, useState } from "react";
 import { asyncThunkGetDitailsOfContractor } from "../../redux/createAsyncThunk";
 import { useDispatch, useSelector } from "react-redux";
 
-import "./cards.css";
+import "./Cards.css";
 import { showToast } from "../../redux/errorSlice/errorSlice";
 import axios from "axios";
 import OrganizationTable from "./OrganizationTable";
