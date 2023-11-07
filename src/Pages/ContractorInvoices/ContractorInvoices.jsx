@@ -92,7 +92,7 @@ const ContractorInvoices = () => {
   const getApprovedInvoices = () =>
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/getapprovedinvoicedforadmin?contractorId=${invoiceid}&page=${page}`,
+      url: `http://localhost:5000/api/getapprovedinvoicedforadmin?contractorId=${invoiceid}&page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -114,7 +114,7 @@ const ContractorInvoices = () => {
   const getPendingInvoices = () =>
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/getpendinginvoiceforadmin?contractorId=${invoiceid}&page=${page2}`,
+      url: `http://localhost:5000/api/getpendinginvoiceforadmin?contractorId=${invoiceid}&page=${page2}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -136,7 +136,7 @@ const ContractorInvoices = () => {
   const handleApproveInvoice = (id) =>
     axios({
       method: "patch",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/approveinvoice`,
+      url: `http://localhost:5000/api/approveinvoice`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },

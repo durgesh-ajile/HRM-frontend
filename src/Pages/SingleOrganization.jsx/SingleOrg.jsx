@@ -94,7 +94,7 @@ const SingleOrg = () => {
   const handlePoSubmit = () =>
     axios({
       method: "post",
-      url: "https://braided-complex-403612.el.r.appspot.com/api/createPo",
+      url: "http://localhost:5000/api/createPo",
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -121,7 +121,7 @@ const SingleOrg = () => {
   const getAllPos = () =>
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/getPO's?clientId=${id}`,
+      url: `http://localhost:5000/api/getPO's?clientId=${id}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -141,7 +141,7 @@ const SingleOrg = () => {
   const getSinglePo = (poId) => {
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/getsinglePo?poId=${poId}`,
+      url: `http://localhost:5000/api/getsinglePo?poId=${poId}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },

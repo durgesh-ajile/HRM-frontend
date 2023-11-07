@@ -89,7 +89,7 @@ export default function Profile() {
   const getAllOrganizations = () =>
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/getallClient?ourOrganizationId=${selectedOrganization}&page=${page}`,
+      url: `http://localhost:5000/api/getallClient?ourOrganizationId=${selectedOrganization}&page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -114,7 +114,7 @@ export default function Profile() {
   const handleAddOrg = () =>
     axios({
       method: "patch",
-      url: "https://braided-complex-403612.el.r.appspot.com/api/addorganization",
+      url: "http://localhost:5000/api/addorganization",
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -137,7 +137,7 @@ export default function Profile() {
       const getAllOurOrganizations = () =>
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/getownorganizationindropdown`,
+      url: `http://localhost:5000/api/getownorganizationindropdown`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },

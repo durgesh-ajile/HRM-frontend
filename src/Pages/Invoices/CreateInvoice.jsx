@@ -55,7 +55,7 @@ const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row, loadin
     } else {
     axios({
       method: "post",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/createInvoiceofpo`,
+      url: `http://localhost:5000/api/createInvoiceofpo`,
       data: {
         poId: poid,
         contractorId: contractorId,
@@ -85,7 +85,7 @@ const CreateInvoice = ({ poid, contractorId, usertoken, handleClose, row, loadin
     let formatDate = convertMonth(month, year);
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/gettaskforadmin?date=${formatDate}&organization=${id}&contractorId=${contractorId}`,
+      url: `http://localhost:5000/api/gettaskforadmin?date=${formatDate}&organization=${id}&contractorId=${contractorId}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },

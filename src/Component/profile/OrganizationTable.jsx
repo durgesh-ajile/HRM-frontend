@@ -27,7 +27,7 @@ const OrganizationTable = ({tableData, setLoading, profileId, loading}) => {
     const handleDeleteOrg = () =>
     axios({
       method: "delete",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/deleteorganization?contractorId=${profileId}&clientId=${deleteOrgId}`,
+      url: `http://localhost:5000/api/deleteorganization?contractorId=${profileId}&clientId=${deleteOrgId}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       }

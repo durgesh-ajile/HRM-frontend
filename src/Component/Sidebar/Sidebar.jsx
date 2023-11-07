@@ -31,11 +31,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { fetchLogin } from "../../redux/admin/databaseSlice";
 import { useDispatch } from "react-redux";
 import NotificationPopover from "./NotificationPopover";
+import socket from "../../Socket";
+import axios from "axios";
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
+ 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [message, setMessage] = React.useState([]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,8 +58,31 @@ function ResponsiveDrawer(props) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { expiry } = JSON.parse(localStorage.getItem("token"));
+  const { usertoken } = JSON.parse(localStorage.getItem("token"));
 
   let currentDate = new Date();
+
+  const getNotificationforadmin = () =>
+    axios({
+      method: "get",
+      url: `http://localhost:5000/api/getNotificationforadmin`,
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+    })
+      .then((res) => {
+        setMessage((preVal) => {
+          return [...res.data.getNotification, ...preVal]
+        })
+        // console.log(res.data.getNotification);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      React.useEffect(()=>{
+        getNotificationforadmin()
+      }, [])
 
   React.useEffect(() => {
     if (!expiry || currentDate > expiry) {
@@ -63,7 +90,22 @@ function ResponsiveDrawer(props) {
     }
   }, []);
 
-  console.log(currentDate > expiry);
+  React.useEffect(()=>{
+    socket.on("contractorupdatetoadmin", (data)=>{
+      setMessage((preVal)=>{
+        return [data, ...preVal]
+      })
+    })  
+  }, [])
+
+  React.useEffect(()=>{
+    socket.on("contractoraddinvoicetoadmin", (data)=>{
+      setMessage((preVal)=>{
+        return [data, ...preVal]
+      })
+    })  
+  }, [])
+ 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -73,6 +115,7 @@ function ResponsiveDrawer(props) {
     navigate("/signin");
     dispatch(fetchLogin([]));
   };
+  console.log(message)
 
   const drawer = (
     <div>
@@ -230,7 +273,7 @@ function ResponsiveDrawer(props) {
                 height: 500,
               }}
             >
-              <NotificationPopover sx={{}}/>
+              <NotificationPopover message={message} sx={{}}/>
             </Popover>
           </Typography>
         </Toolbar>

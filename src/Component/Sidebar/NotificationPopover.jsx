@@ -75,7 +75,8 @@ const StyledFab = styled(Fab)({
 });
 
 
-const NotificationPopover = () => {
+const NotificationPopover = ({message}) => {
+ 
   return (
     <div >
       <ScopedCssBaseline >
@@ -98,9 +99,9 @@ const NotificationPopover = () => {
           Notification
         </Typography>
         <List sx={{ mb: 2 }}>
-          {messages.map(({ id, primary, secondary, person }) => (
-            <React.Fragment key={id}>
-              {id === 1 && (
+          {message.map((data) => (
+            <React.Fragment>
+              {/* {id === 1 && (
                 <ListSubheader sx={{ bgcolor: "background.paper" }}>
                   Today
                 </ListSubheader>
@@ -110,13 +111,15 @@ const NotificationPopover = () => {
                 <ListSubheader sx={{ bgcolor: "background.paper" }}>
                   Yesterday
                 </ListSubheader>
-              )}
+              )} */}
 
               <ListItem button>
                 <ListItemAvatar>
-                  <Avatar alt="Profile Picture" src={person} />
+                  <Avatar alt="Profile Picture" />
                 </ListItemAvatar>
-                <ListItemText primary={primary} secondary={secondary} />
+                <ListItemText>
+                  {data.Message}
+                </ListItemText>
               </ListItem>
             </React.Fragment>
           ))}

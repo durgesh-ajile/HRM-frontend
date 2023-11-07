@@ -54,7 +54,7 @@ const Organizations = () => {
   const handleOrganizationSubmit = () =>
     axios({
       method: "post",
-      url: "https://braided-complex-403612.el.r.appspot.com/api/createClient",
+      url: "http://localhost:5000/api/createClient",
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -76,7 +76,7 @@ const Organizations = () => {
   const getAllOrganizations = () =>
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/getallClient?ourOrganizationId=${selectedOrganization}&page=${page}`,
+      url: `http://localhost:5000/api/getallClient?ourOrganizationId=${selectedOrganization}&page=${page}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
@@ -99,7 +99,7 @@ const Organizations = () => {
   const getAllOurOrganizations = () =>
     axios({
       method: "get",
-      url: `https://braided-complex-403612.el.r.appspot.com/api/getownorganizationindropdown`,
+      url: `http://localhost:5000/api/getownorganizationindropdown`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
