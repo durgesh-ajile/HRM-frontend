@@ -18,7 +18,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 
-
 import {
   AdminPanelSettingsSharp,
   AppRegistrationTwoTone,
@@ -37,7 +36,6 @@ import axios from "axios";
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
- 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [message, setMessage] = React.useState([]);
 
@@ -65,24 +63,27 @@ function ResponsiveDrawer(props) {
   const getNotificationforadmin = () =>
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getNotificationforadmin`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getNotificationforadmin`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
     })
       .then((res) => {
-        setMessage((preVal) => {
-          return [...res.data.getNotification, ...preVal]
-        })
+        if (res.data.message !== "No notification are currently in database") {
+          setMessage((preVal) => {
+            return [...res.data.getNotification, ...preVal];
+          });
+        }
         // console.log(res.data.getNotification);
       })
       .catch((err) => {
         console.log(err);
       });
 
-      React.useEffect(()=>{
-        getNotificationforadmin()
-      }, [])
+  React.useEffect(() => {
+    getNotificationforadmin();
+  }, []);
+
 
   React.useEffect(() => {
     if (!expiry || currentDate > expiry) {
@@ -90,22 +91,20 @@ function ResponsiveDrawer(props) {
     }
   }, []);
 
-  React.useEffect(()=>{
-    socket.on("contractorupdatetoadmin", (data)=>{
-      setMessage((preVal)=>{
-        return [data, ...preVal]
-      })
-    })  
-  }, [])
+  React.useEffect(() => {
+    socket.on("contractorupdatetoadmin", (data) => {
+      setMessage((prevMessage) => [data[0], ...prevMessage]);
+    });
+  }, []);
 
-  React.useEffect(()=>{
-    socket.on("contractoraddinvoicetoadmin", (data)=>{
-      setMessage((preVal)=>{
-        return [data, ...preVal]
-      })
-    })  
-  }, [])
- 
+  React.useEffect(() => {
+    socket.on("contractoraddinvoicetoadmin", (data) => {
+      setMessage((prevMessage) => [data[0], ...prevMessage]);
+    });
+  }, []);
+
+  console.log(message);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -115,7 +114,7 @@ function ResponsiveDrawer(props) {
     navigate("/signin");
     dispatch(fetchLogin([]));
   };
-  console.log(message)
+  console.log(message);
 
   const drawer = (
     <div>
@@ -215,18 +214,22 @@ function ResponsiveDrawer(props) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <CssBaseline sx={{ '@global': {
-    '*::-webkit-scrollbar': {
-      width: '0.4em'
-    },
-    '*::-webkit-scrollbar-track': {
-      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-    },
-    '*::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0,0,0,.1)',
-      outline: '1px solid slategrey'
-    }
-  }}}/>
+      <CssBaseline
+        sx={{
+          "@global": {
+            "*::-webkit-scrollbar": {
+              width: "0.4em",
+            },
+            "*::-webkit-scrollbar-track": {
+              "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
+            },
+            "*::-webkit-scrollbar-thumb": {
+              backgroundColor: "rgba(0,0,0,.1)",
+              outline: "1px solid slategrey",
+            },
+          },
+        }}
+      />
       <AppBar
         position="fixed"
         sx={{
@@ -251,7 +254,7 @@ function ResponsiveDrawer(props) {
                 color: "#000",
                 cursor: "pointer",
                 position: "absolute",
-                right: "10",
+                right: "20",
                 top: "20",
               }}
               aria-describedby={id}
@@ -273,7 +276,7 @@ function ResponsiveDrawer(props) {
                 height: 500,
               }}
             >
-              <NotificationPopover message={message} sx={{}}/>
+              <NotificationPopover message={message} sx={{}} />
             </Popover>
           </Typography>
         </Toolbar>

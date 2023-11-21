@@ -23,7 +23,7 @@ const ViewInvoice = ({ invoiceId, usertoken, handleClose }) => {
   const getInvoiceofContractor = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getsingleinvoice?invoiceId=${invoiceId}`,
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getsingleinvoice?invoiceId=${invoiceId}`,
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
