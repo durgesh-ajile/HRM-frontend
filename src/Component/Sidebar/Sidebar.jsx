@@ -38,9 +38,12 @@ const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [message, setMessage] = React.useState([]);
+  const [seen, setSeen] = React.useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    makeiconreadadmin()
+    setSeen(true)
   };
 
   const handleClose = () => {
@@ -74,11 +77,30 @@ function ResponsiveDrawer(props) {
             return [...res.data.getNotification, ...preVal];
           });
         }
-        // console.log(res.data.getNotification);
       })
       .catch((err) => {
         console.log(err);
       });
+
+      const makeiconreadadmin = () =>{
+        // setSeen(true) 
+        axios({
+          method: "patch",
+          url: `https://braided-complex-403612.el.r.appspot.com/api/makeiconreadadmin`,
+          headers: {
+            Authorization: `Bearer ${usertoken}`,
+          }
+        })
+          .then((res) => {
+            console.log(res)
+            // setSeen(false)
+            }
+          )
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      
 
   React.useEffect(() => {
     getNotificationforadmin();
@@ -103,7 +125,7 @@ function ResponsiveDrawer(props) {
     });
   }, []);
 
-  console.log(message);
+  console.log(seen)
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -114,7 +136,19 @@ function ResponsiveDrawer(props) {
     navigate("/signin");
     dispatch(fetchLogin([]));
   };
-  console.log(message);
+  const 
+  totalUnread = () => {
+    if (message){
+      let total = 0
+      for (let i = 0; i < message.length; i++){
+        if(message[i].Icon === false){
+          total += 1;
+        }
+      }
+      return total
+    }
+    return 0
+  }
 
   const drawer = (
     <div>
@@ -238,7 +272,7 @@ function ResponsiveDrawer(props) {
           backgroundColor: "#F1F6F9",
         }}
       >
-        <Toolbar>
+        <Toolbar id='toolbar-menu'>
           <IconButton
             color="black"
             aria-label="open drawer"
@@ -249,18 +283,16 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
+            <div id='notification-icon-span'>
             <NotificationsIcon
               style={{
                 color: "#000",
-                cursor: "pointer",
-                position: "absolute",
-                right: "20",
-                top: "20",
+                cursor: "pointer"
               }}
               aria-describedby={id}
               onClick={handleClick}
-            />
-
+            />{!seen && (totalUnread() !== 0) && <dot id='noti-number'>{totalUnread()}</dot>}
+            </div>
             <Popover
               id={id}
               open={open}

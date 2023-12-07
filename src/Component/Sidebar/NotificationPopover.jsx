@@ -13,10 +13,13 @@ import Avatar from "@mui/material/Avatar";
 import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
 import './NotificationPopover.css'
 import { useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const NotificationPopover = ({ message }) => {
   let currentDate = new Date();
-
+  const { usertoken } = JSON.parse(localStorage.getItem("token"));
+  const navigate = useNavigate()
   const varDate = useRef('');
 
   const handleToday = (date) => {
@@ -43,11 +46,32 @@ const NotificationPopover = ({ message }) => {
     }
   }
 
+  const makenotificationread = (id) =>
+  axios({
+    method: "patch",
+    url: `https://braided-complex-403612.el.r.appspot.com/api/makenotificationread`,
+    headers: {
+      Authorization: `Bearer ${usertoken}`,
+    },
+    data: {
+      notificationId: id
+    }
+  })
+    .then((res) => {
+      console.log(res)
+      }
+    )
+    .catch((err) => {
+      console.log(err);
+    });
+
   const handleClick = (data) => {
-    if (data.Message === ""){
-      
+    makenotificationread(data._id)
+    if(data.Type === "Create Invoice"){
+      navigate(`invoices/${data.Profile[1].ref._id}`)
     }
   }
+  console.log(message)
 
   return (
     <div >
@@ -86,6 +110,7 @@ const NotificationPopover = ({ message }) => {
                   <ListItemText>
                     {data.Message}
                   </ListItemText>
+                  {data.read === false && <dot id='popup-dot'></dot>}
                 </ListItem>
                 </div>
               </React.Fragment>

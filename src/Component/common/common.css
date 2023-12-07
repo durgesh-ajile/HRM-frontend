@@ -3,3 +3,41 @@
     justify-content: center;
     margin-top: 20px;
   }
+
+  #btn-dot{
+    position: relative;
+  }
+  #dot{
+    position: absolute;
+    top:5px;
+    right: 5px;
+    width: 6px;
+    height: 6px;
+    background:linear-gradient(to right, #fe03b4, #ee0202);
+    display:inline-block;
+    border-radius: 100%;
+    box-shadow: 0 0 0.25em red;
+  }
+  #toolbar-menu{
+    display: flex;
+    justify-content: flex-end;
+  }
+#notification-icon-span{
+  position: relative;
+}
+#noti-number{
+  position: absolute;
+  top:2px;
+  right: 0px;
+  font-size: 10px;
+  font-weight: 600;
+  color:red;
+  display:block;
+  /* text-shadow: 0 0 0.1em red; */
+  z-index: 3;
+}
+  @media screen and (max-width:601px) {
+    #toolbar-menu{
+      display: flex;
+      justify-content: space-between;
+    }  }

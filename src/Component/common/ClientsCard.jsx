@@ -11,7 +11,7 @@ import AlertDialogSlide from "./AlertDialogSlide/AlertDialogSlide";
 import { showToast } from "../../redux/errorSlice/errorSlice";
 
 // eslint-disable-next-line react/prop-types
-const ClientsCard = ({ value }) => {
+const ClientsCard = ({ value, message }) => {
   const navigate = useNavigate();
   // eslint-disable-next-line react/prop-types
   const { first_name, last_name, email, _id, profileId } = value;
@@ -30,6 +30,17 @@ const ClientsCard = ({ value }) => {
           })
         );
   };
+
+  const findUnread = (id) => {
+    if(message){
+      for(let i = 0; i < message.length; i++){
+        if (id === message[i].Profile[1].ref._id && message[i].read === false){
+          return true
+        }
+      }
+    }
+    return false
+  }
 
   return (
     <>
@@ -92,6 +103,7 @@ const ClientsCard = ({ value }) => {
                 <WhiteButton
                   onClick={() => handleApproveProfile(_id)}
                   text={"Approve"}
+                  // unread={findUnread2(_id)}
                 />
               )}
             </Box>
@@ -122,6 +134,7 @@ const ClientsCard = ({ value }) => {
                 <WhiteButton
                   onClick={() => navigate(`/invoices/${_id}?page=1&page2=1`)}
                   text={"Invoices"}
+                  unread={findUnread(_id)}
                 />
               )}
             </Box>

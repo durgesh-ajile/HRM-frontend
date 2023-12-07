@@ -11,10 +11,14 @@ import {
   asyncThunkSearchContractors,
 } from "../../redux/createAsyncThunk";
 import { showToast } from "../../redux/errorSlice/errorSlice";
+import axios from "axios";
 
 const AdminContractorTab = () => {
   const [page, setPage] = useState(1);
   const [isSearch, setisSearch] = useState(false);
+  const [message, setMessage] = useState([]);
+  const { usertoken } = JSON.parse(localStorage.getItem("token"));
+
   const [ContractorData, setContractorData] = useState([]);
   const limit = 9;
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,7 +39,31 @@ const AdminContractorTab = () => {
     setisSearch(true);
     dispatch(asyncThunkSearchContractors(payload));
   };
-  // const { ContractorData: { totalPages, totalContractors, page: pageIndicator, data } } = useSelector(store => store.admin)
+
+
+  const getNotificationforadmin = () =>
+    axios({
+      method: "get",
+      url: `https://braided-complex-403612.el.r.appspot.com/api/getNotificationforadmin`,
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+    })
+      .then((res) => {
+        if (res.data.message !== "No notification are currently in database") {
+          setMessage((preVal) => {
+            return [...res.data.getNotification, ...preVal];
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  useEffect(() => {
+    getNotificationforadmin();
+  }, []);
+
 
   const handlePrevPagination = () => {
     if (page >= 2) {
@@ -85,6 +113,7 @@ const AdminContractorTab = () => {
     isSearch ? dispatch(asyncThunkSearchContractors(payload)) : dispatch(asyncThunkGetContractor(page));
   }, [dispatch, page]);
 
+  console.log(ContractorData)
   return (
     <Box sx={{ backgroundColor: "#00000006" }}>
       <New totalPages={totalPages} />
@@ -111,7 +140,7 @@ const AdminContractorTab = () => {
           {ContractorData
             ? ContractorData.map((value, i) => (
               <Box key={i}>
-                <ClientsCard value={value}  />
+                <ClientsCard value={value} message={message} />
               </Box>
             ))
             : [...Array(limit)].map((_, index) => (
